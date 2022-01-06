@@ -3,16 +3,17 @@ set -eu
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpcshare/appsunit/MyersU/yoshihiko-suzuki
-APP=canu
-VER=haplotype
+APP=yak
+VER=0.1
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-git clone https://github.com/yoshihikosuzuki/$APP && cd $APP/src && make
-cd ../.. && mkdir $VER && mv $APP/build/* $VER/ && rm -rf $APP
+wget -O - https://github.com/lh3/$APP/archive/refs/tags/v$VER.tar.gz | tar xzvf -
+mv $APP-$VER $VER && cd $VER
+make
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -24,5 +25,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", pathjoin(apphome, "bin"))
+prepend_path("PATH", apphome)
 __END__
