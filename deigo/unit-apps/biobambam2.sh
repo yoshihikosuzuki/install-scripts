@@ -2,21 +2,17 @@
 set -eu
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=
-APP=
-VER=
+MODROOT=/hpcshare/appsunit/MyersU
+APP=biobambam2
+VER=2.0.87
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-# NOTE: Options for `tar` depend on the file type
-wget -O - /path/to/tarball | tar xzvf -
-# NOTE: `$APP-$VER` depends on the downloaded file name
-mkdir $VER && cd $APP-$VER
-./configure --prefix=$APPDIR/$VER && make && make install
-cd .. && rm -r $APP-$VER
+wget -O - https://github.com/gt1/biobambam2/releases/download/2.0.87-release-20180301132713/biobambam2-2.0.87-release-20180301132713-x86_64-etch-linux-gnu.tar.gz | tar xzvf -
+mv biobambam2/2.0.87-release-20180301132713/x86_64-etch-linux-gnu/ $VER && rm -r biobambam2
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -31,5 +27,4 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 prepend_path("PATH", pathJoin(apphome, "bin"))
 prepend_path("LIBRARY_PATH", pathJoin(apphome, "lib"))
 prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
-prepend_path("CPATH", pathJoin(apphome, "include"))
 __END__

@@ -2,21 +2,22 @@
 set -eu
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=
-APP=
-VER=
+MODROOT=/hpcshare/appsunit/MyersU
+APP=gepard
+VER=1.40.0
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-# NOTE: Options for `tar` depend on the file type
-wget -O - /path/to/tarball | tar xzvf -
-# NOTE: `$APP-$VER` depends on the downloaded file name
-mkdir $VER && cd $APP-$VER
-./configure --prefix=$APPDIR/$VER && make && make install
-cd .. && rm -r $APP-$VER
+wget -O - https://github.com/univieCUBE/$APP/archive/refs/tags/v$VER.tar.gz | tar xzvf -
+mv $APP-$VER $VER && cd $VER
+cat <<__END__ >$APP
+#!/bin/sh
+java -cp $APPDIR/$VER/dist/Gepard-1.40.jar org.gepard.client.cmdline.CommandLine -matrix $APPDIR/$VER/resources/matrices/edna.mat \$*
+__END__
+chmod +x $APP
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -28,8 +29,6 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", pathJoin(apphome, "bin"))
-prepend_path("LIBRARY_PATH", pathJoin(apphome, "lib"))
-prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
-prepend_path("CPATH", pathJoin(apphome, "include"))
+prepend_path("PATH", apphome)
+setenv("GEPARD_ROOT", apphome)
 __END__

@@ -34,6 +34,6 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
 depends_on("python/VERSION")
-prepend_path("PATH", apphome)
+prepend_path("PATH", pathJoin(apphome, "bin"))
 prepend_path("PYTHONPATH", pathJoin(apphome, "lib/pythonX.X/site-packages"))
 __END__

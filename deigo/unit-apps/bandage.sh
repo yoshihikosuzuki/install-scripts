@@ -2,21 +2,22 @@
 set -eu
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=
-APP=
-VER=
+MODROOT=/hpcshare/appsunit/MyersU
+APP=bandage
+VER=0.8.1
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-# NOTE: Options for `tar` depend on the file type
-wget -O - /path/to/tarball | tar xzvf -
-# NOTE: `$APP-$VER` depends on the downloaded file name
-mkdir $VER && cd $APP-$VER
-./configure --prefix=$APPDIR/$VER && make && make install
-cd .. && rm -r $APP-$VER
+mkdir $VER && cd $VER
+wget https://github.com/rrwick/Bandage/releases/download/v$VER/Bandage_CentOS_static_v0_8_1.zip && unzip *.zip
+cat <<__END__ >$APP
+#!/bin/sh
+LIBGL_ALWAYS_INDIRECT=1 $APPDIR/$VER/Bandage
+__END__
+chmod +x $APP
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -28,8 +29,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", pathJoin(apphome, "bin"))
-prepend_path("LIBRARY_PATH", pathJoin(apphome, "lib"))
-prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
-prepend_path("CPATH", pathJoin(apphome, "include"))
+prepend_path("PATH", apphome)
 __END__

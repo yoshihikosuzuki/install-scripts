@@ -2,21 +2,23 @@
 set -eu
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=
-APP=
-VER=
+MODROOT=/hpcshare/appsunit/MyersU
+APP=bam2fastx
+VER=1.3.1
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-# NOTE: Options for `tar` depend on the file type
-wget -O - /path/to/tarball | tar xzvf -
-# NOTE: `$APP-$VER` depends on the downloaded file name
-mkdir $VER && cd $APP-$VER
-./configure --prefix=$APPDIR/$VER && make && make install
-cd .. && rm -r $APP-$VER
+curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+sh Miniconda3-latest-Linux-x86_64.sh -b -p $VER && rm Miniconda3-latest-Linux-x86_64.sh
+cd $VER
+./bin/conda config --add channels defaults
+./bin/conda config --add channels conda-forge
+./bin/conda config --add channels bioconda
+./bin/conda install -y $APP=$VER
+rm -rf pkgs
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -29,7 +31,4 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
 prepend_path("PATH", pathJoin(apphome, "bin"))
-prepend_path("LIBRARY_PATH", pathJoin(apphome, "lib"))
-prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
-prepend_path("CPATH", pathJoin(apphome, "include"))
 __END__

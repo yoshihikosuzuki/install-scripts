@@ -1,22 +1,22 @@
 #!/bin/bash
 set -eu
 
+module load htslib/1.14
+
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=
-APP=
-VER=
+MODROOT=/hpcshare/appsunit/MyersU
+APP=hapcut2
+VER=1.3.1
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-# NOTE: Options for `tar` depend on the file type
-wget -O - /path/to/tarball | tar xzvf -
-# NOTE: `$APP-$VER` depends on the downloaded file name
-mkdir $VER && cd $APP-$VER
-./configure --prefix=$APPDIR/$VER && make && make install
-cd .. && rm -r $APP-$VER
+wget -O - https://github.com/vibansal/$APP/archive/refs/tags/v1.3.3.tar.gz | tar xzvf -
+mkdir $VER && cd HapCUT2-1.3.3 && make
+chmod +x utilities/*.py && mv build/HAPCUT2 build/extractHAIRS utilities/*.py $APPDIR/$VER
+cd .. && rm -r HapCUT2-1.3.3
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -28,8 +28,6 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", pathJoin(apphome, "bin"))
-prepend_path("LIBRARY_PATH", pathJoin(apphome, "lib"))
-prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
-prepend_path("CPATH", pathJoin(apphome, "include"))
+depends_on("htslib/1.14")
+prepend_path("PATH", apphome)
 __END__
