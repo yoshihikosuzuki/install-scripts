@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=trf
 VER=4.09.1

@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=minimap2
 VER=2.20

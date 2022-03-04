@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 ml python/2.7.18
 

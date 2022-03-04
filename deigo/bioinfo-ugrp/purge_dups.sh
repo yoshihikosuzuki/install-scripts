@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=purge_dups
 VER=1.2.5

@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=hifiasm
 VER=0.15.4

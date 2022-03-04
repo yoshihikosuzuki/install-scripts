@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=canu
 VER=2.1.1

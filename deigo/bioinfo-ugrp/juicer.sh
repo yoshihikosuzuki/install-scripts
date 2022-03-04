@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=juicer
 VER=1.6

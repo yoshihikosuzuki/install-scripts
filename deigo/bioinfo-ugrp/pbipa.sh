@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=pbipa
 VER=1.3.2

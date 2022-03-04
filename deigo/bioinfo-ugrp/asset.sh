@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=asset
 VER=1.0.3

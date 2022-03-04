@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=k8
 VER=0.2.5

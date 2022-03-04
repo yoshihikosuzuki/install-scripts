@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=winnowmap
 VER=2.03

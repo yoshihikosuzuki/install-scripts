@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=DAZZ_DB
 VER=2021.03.30

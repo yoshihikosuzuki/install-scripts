@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=arima_pipeline
 VER=2019.02.08

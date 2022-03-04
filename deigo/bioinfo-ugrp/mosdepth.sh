@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=mosdepth
 VER=0.3.1

@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=parallel
 VER=20210622

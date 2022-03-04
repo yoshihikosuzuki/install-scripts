@@ -1,16 +1,17 @@
 #!/bin/bash
 
-APP=gfatools
-VER=0.5
+APP=juicebox
+VER=2.13.07
 MODROOT=/apps/unit/BioinfoUgrp/Other
 
-APPDIR=$MODROOT/$APP
+APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
 cd $APPDIR
 
-wget -O - https://github.com/lh3/gfatools/archive/refs/tags/v$VER.tar.gz | tar xzvf -
-mv $APP-$VER $VER
-cd $VER && make
+wget https://github.com/aidenlab/Juicebox/releases/download/v.$VER/juicebox.jar
+CMD=juicebox
+echo '#!/bin/sh' > $CMD && echo "java -jar -Xmx500G $APPDIR/juicebox.jar" >> $CMD
+chmod +x $CMD
 
 cd $MODROOT/modulefiles/
 mkdir -p $APP
@@ -24,11 +25,12 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 -- Package information
 whatis("Name: "..appname)
 whatis("Version: "..appversion)
-whatis("URL: ".."https://github.com/lh3/gfatools")
+whatis("URL: ".."https://github.com/aidenlab/Juicebox")
 whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."gfa, assembly")
-whatis("Description: ".."Tools for manipulating sequence graphs in the GFA and rGFA formats.")
+whatis("Keywords: ".."Hi-C, scaffolding")
+whatis("Description: ".."Visualization and analysis software for Hi-C data.")
 
 -- Package settings
+depends_on("java-jdk/14")
 prepend_path("PATH", apphome)
 __END__

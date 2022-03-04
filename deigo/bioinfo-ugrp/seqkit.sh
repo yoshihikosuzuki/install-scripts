@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=seqkit
 VER=2.0.0

@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=meryl
 VER=1.3

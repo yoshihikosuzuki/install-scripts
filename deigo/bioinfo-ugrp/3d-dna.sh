@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=3d-dna
 VER=180922

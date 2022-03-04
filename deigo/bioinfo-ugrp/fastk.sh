@@ -1,4 +1,4 @@
-#!/bin.bash
+#!/bin/bash
 
 APP=FASTK
 VER=2021.09.29
