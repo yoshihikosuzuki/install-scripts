@@ -3,21 +3,16 @@ shopt -s expand_aliases
 source $HOME/.bashrc
 set -eux
 
-# DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/work/yoshihiko_s/app
-APP=tree
-VER=2.0.2
+APP=seqkit
+VER=2.0.0
 
-# MAKE THE MODULE DIRECTORY
-APPDIR=$MODROOT/$APP
-mkdir -p $APPDIR && cd $APPDIR
+APPDIR=$MODROOT/$APP/$VER
+mkdir -p $APPDIR
+cd $APPDIR
 
-# DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget -O - https://gitlab.com/OldManProgrammer/unix-tree/-/archive/$VER/unix-tree-$VER.tar.gz | tar xzvf -
-mv unix-tree-$VER $VER
-cd $VER && make
+wget -O - https://github.com/shenwei356/seqkit/releases/download/v$VER/seqkit_linux_amd64.tar.gz | tar xzvf -
 
-# WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
 -- Default settings

@@ -1,21 +1,22 @@
 #!/bin/bash
+# NOTE: Need Rust
 shopt -s expand_aliases
 source $HOME/.bashrc
 set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/work/yoshihiko_s/app
-APP=tree
-VER=2.0.2
+APP=bat
+VER=0.20.0
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget -O - https://gitlab.com/OldManProgrammer/unix-tree/-/archive/$VER/unix-tree-$VER.tar.gz | tar xzvf -
-mv unix-tree-$VER $VER
-cd $VER && make
+cargo install --locked --version $VER --root . bat
+mv bin $VER
+cd $VER && ln -sf bat cat
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP

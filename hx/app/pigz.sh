@@ -5,17 +5,16 @@ set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/work/yoshihiko_s/app
-APP=tree
-VER=2.0.2
+APP=pigz
+VER=2.7
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget -O - https://gitlab.com/OldManProgrammer/unix-tree/-/archive/$VER/unix-tree-$VER.tar.gz | tar xzvf -
-mv unix-tree-$VER $VER
-cd $VER && make
+wget -O - https://zlib.net/pigz/$APP-$VER.tar.gz | tar xzvf -
+mv $APP-$VER $VER && cd $VER && make
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
