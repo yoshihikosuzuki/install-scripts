@@ -1,5 +1,4 @@
 #!/bin/bash
-# NOTE: Run this script on **cocoa**
 shopt -s expand_aliases
 source $HOME/.bashrc
 set -eux
