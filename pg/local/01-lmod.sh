@@ -1,5 +1,5 @@
 #!/bin/bash
-# NOTE: Run this script on **hx03**
+# NOTE: Run this script on **pg**
 shopt -s expand_aliases
 source $HOME/.bashrc
 set -eux
@@ -11,31 +11,29 @@ N_THREAD=12
 mkdir -p ${W_DIR} ${I_DIR}
 cd ${W_DIR}
 
-
-
 # Install libgmp-5.0.0 for libgmp.so.3
-wget -O - https://ftp.jaist.ac.jp/pub/GNU/gmp/gmp-5.0.0.tar.gz | tar zxvf -
+tar zxvf gmp-5.0.0.tar.gz
 cd gmp-5.0.0
 ./configure --prefix=${I_DIR}
 make clean && make -j${N_THREAD} && make check -k -j${N_THREAD} && make install
 cd ..
 
 # Install libmpfr-2.4.0 for libmpfr.so.1
-wget -O - https://ftp.jaist.ac.jp/pub/GNU/mpfr/mpfr-2.4.0.tar.gz | tar zxvf -
+tar zxvf mpfr-2.4.0.tar.gz
 cd mpfr-2.4.0
 ./configure --prefix=${I_DIR} --with-gmp=${I_DIR}
 make clean && make -j${N_THREAD} && make check -k -j${N_THREAD} && make install
 cd ..
 
 # Install Lua
-wget -O - https://sourceforge.net/projects/lmod/files/lua-5.1.4.9.tar.bz2 | tar jxvf -
+tar jxvf lua-5.1.4.9.tar.bz2
 cd lua-5.1.4.9
 ./configure --prefix=${I_DIR}
 make && make install
 cd ..
 
 # Install Lmod
-wget -O - https://sourceforge.net/projects/lmod/files/Lmod-8.6.tar.bz2 | tar jxvf -
+tar jxvf Lmod-8.6.tar.bz2
 cd Lmod-8.6
 ./configure --prefix=${I_DIR}
 make install
