@@ -1,33 +1,29 @@
 #!/bin/bash
+shopt -s expand_aliases
+source $HOME/.bashrc
+set -eux
 
+PG_DIR=$HOME/tmp
+
+MODROOT=/hpgwork2/yoshihiko_s/app/
 APP=gfatools
 VER=0.5
-MODROOT=/apps/unit/BioinfoUgrp/Other
 
 APPDIR=$MODROOT/$APP
-mkdir -p $APPDIR
-cd $APPDIR
+mkdir -p $APPDIR && cd $APPDIR
 
-wget -O - https://github.com/lh3/gfatools/archive/refs/tags/v$VER.tar.gz | tar xzvf -
+mv ${PG_DIR}/v$VER.tar.gz .
+tar xzvf v$VER.tar.gz
 mv $APP-$VER $VER
 cd $VER && make
 
-cd $MODROOT/modulefiles/
-mkdir -p $APP
-cat <<'__END__' > $APP/$VER.lua
+cd $MODROOT/.modulefiles && mkdir -p $APP
+cat <<'__END__' >$APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "$MODROOT"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
-
--- Package information
-whatis("Name: "..appname)
-whatis("Version: "..appversion)
-whatis("URL: ".."https://github.com/lh3/gfatools")
-whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."gfa, assembly")
-whatis("Description: ".."Tools for manipulating sequence graphs in the GFA and rGFA formats.")
 
 -- Package settings
 prepend_path("PATH", apphome)
