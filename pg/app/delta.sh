@@ -6,17 +6,17 @@ set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpgwork2/yoshihiko_s/app/
-APP=bat
-VER=0.20.0
+APP=delta
+VER=0.12.1
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-cargo install --locked --version $VER --root . bat
+cargo install --locked --version $VER --root . git-delta
 mv bin $VER
-cd $VER && ln -sf bat cat
+cd $VER && ln -sf delta diff
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
