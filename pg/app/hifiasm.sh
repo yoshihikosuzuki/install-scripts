@@ -1,33 +1,29 @@
 #!/bin/bash
+shopt -s expand_aliases
+source $HOME/.bashrc
+set -eux
 
+PG_DIR=$HOME/tmp
+
+MODROOT=/hpgwork2/yoshihiko_s/app/
 APP=hifiasm
 VER=0.15.4
-MODROOT=/apps/unit/BioinfoUgrp/Other
 
 APPDIR=$MODROOT/$APP
-mkdir -p $APPDIR
-cd $APPDIR
+mkdir -p $APPDIR && cd $APPDIR
 
-wget -O - https://github.com/chhylp123/hifiasm/archive/refs/tags/$VER.tar.gz | tar xzvf -
+mv ${PG_DIR}/$VER.tar.gz .
+tar xzvf $VER.tar.gz
 mv $APP-$VER $VER
 cd $VER && make
 
-cd $MODROOT/modulefiles/
-mkdir -p $APP
-cat <<'__END__' > $APP/$VER.lua
+cd $MODROOT/.modulefiles && mkdir -p $APP
+cat <<'__END__' >$APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "$MODROOT"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
-
--- Package information
-whatis("Name: "..appname)
-whatis("Version: "..appversion)
-whatis("URL: ".."https://github.com/chhylp123/hifiasm")
-whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."PacBio, hifi, assembly")
-whatis("Description: ".."Hifiasm: a haplotype-resolved assembler for accurate Hifi reads.")
 
 -- Package settings
 prepend_path("PATH", apphome)
