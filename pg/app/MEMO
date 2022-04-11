@@ -1,0 +1,4 @@
+cat <<'__END__' >$APP/$VER.lua
+ではなく
+cat <<__END__ >$APP/$VER.lua
+にするように

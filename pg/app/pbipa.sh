@@ -18,7 +18,7 @@ cd $VER
 
 cd $MODROOT/modulefiles/
 mkdir -p $APP
-cat <<'__END__' > $APP/$VER.lua
+cat <<__END__ > $APP/$VER.lua
 -- Default settings
 local modroot    = "/apps/unit/BioinfoUgrp"
 local appname    = myModuleName()
