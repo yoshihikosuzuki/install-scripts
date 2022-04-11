@@ -3,6 +3,8 @@ shopt -s expand_aliases
 source $HOME/.bashrc
 set -eux
 
+PG_DIR=$HOME/tmp
+
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpgwork2/yoshihiko_s/app/
 APP=pigz
