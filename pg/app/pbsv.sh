@@ -5,7 +5,7 @@ set -eux
 
 MODROOT=/hpgwork2/yoshihiko_s/app
 APP=pbsv
-VER=2.8.0
+VER=2.4.0
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR

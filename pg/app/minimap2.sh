@@ -5,7 +5,7 @@ set -eux
 
 MODROOT=/hpgwork2/yoshihiko_s/app
 APP=minimap2
-VER=2.20
+VER=2.24
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR

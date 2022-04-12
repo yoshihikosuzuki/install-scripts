@@ -3,10 +3,21 @@
 ## How to load a module
 
 ```bash
-. /apps/free/lmod/lmod/init/bash
-module use $MODROOT
-module load $APP/$VER   # or just `module load $APP` for the latest version
+. $LMOD_INIT            # Make Lmod available; Specific to HPC (see below)
+module use $MODROOT     # Make the modules under $MODROOT visible to Lmod
+module load $APP/$VER   # Load a module
 ```
+
+## List of HPCs and their `$LMOD_INIT`
+
+| Name | Description | `$LMOD_INIT` |
+|:-|:-|:-|
+| Deigo | OIST's HPC |  `/apps/free/lmod/lmod/init/bash` |
+| hx | Morishita lab's HPC for non-human researches | `/home/yoshihiko_s/.local/lmod/lmod/init/bash` |
+| pg | Morishita lab's HPC for human researches | `/home/yoshihiko_s/.local/lmod/lmod/init/bash` |
+| Oakbridge-CX (OBCX) | UT's HPC | (Not installed yet) |
+
+**NOTE**: The installation script of Lmod for hx and pg is `hx/local/01-lmod.sh` and `pg/local/01-lmod.sh`, respectively, in this repository.
 
 ## List of `$MODROOT`s
 
@@ -21,9 +32,21 @@ module load $APP/$VER   # or just `module load $APP` for the latest version
 | MyersU | `/hpcshare/appsunit/MyersU/.modulefiles` |
 | Yoshi's personal | `/hpcshare/appsunit/MyersU/yoshihiko-suzuki/.modulefiles` |
 
+### hx
+
+| Name | `$MODROOT` |
+|:-|:-|
+| Yoshi's personal | `/work/yoshihiko_s/app/.modulefiles` |
+
+### pg
+
+| Name | `$MODROOT` |
+|:-|:-|
+| Yoshi's personal | `/hpgwork2/yoshihiko_s/app/.modulefiles` |
+
 ### Oakbridge-CX
 
-| Module group | Root path to modulefiles |
+| Name | `$MODROOT` |
 |:-|:-|
 |||
 
@@ -58,7 +81,7 @@ Every installation of a module overall takes the following form:
 
 ```bash
 #!/bin/bash
-set -eu
+set -eux
 
 # LOAD DEPENDENCIES IF NEEDED
 module load XXX
