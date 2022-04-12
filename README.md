@@ -2,6 +2,7 @@
 
 ## TODO
 
+- Lmod の global install?
 - hx,pg のインストールスクリプトを `$HOME/.bashrc` に依存しないようにする
 - pg のプロキシ設定を `$HOME` 以下の設定ファイルに依存しないようにする、もしくは依存を明記する
 
