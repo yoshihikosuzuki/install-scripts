@@ -4,14 +4,19 @@ source $HOME/.bashrc
 set -eux
 
 MODROOT=/hpgwork2/yoshihiko_s/app
-APP=canu
-VER=2.1.1
+APP=pbsv
+VER=2.8.0
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-wget -O - https://github.com/marbl/canu/releases/download/v$VER/$APP-$VER.Linux-amd64.tar.xz | tar Jxvf -
-mv $APP-$VER $VER
+curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER && rm Miniconda3-latest-Linux-x86_64.sh
+cd $VER
+./bin/conda config --add channels defaults
+./bin/conda config --add channels conda-forge
+./bin/conda config --add channels bioconda
+./bin/conda install -y $APP=$VER
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua

@@ -4,14 +4,15 @@ source $HOME/.bashrc
 set -eux
 
 MODROOT=/hpgwork2/yoshihiko_s/app
-APP=canu
-VER=2.1.1
+APP=k8
+VER=0.2.5
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-wget -O - https://github.com/marbl/canu/releases/download/v$VER/$APP-$VER.Linux-amd64.tar.xz | tar Jxvf -
-mv $APP-$VER $VER
+wget -O - https://github.com/attractivechaos/k8/releases/download/$VER/$APP-$VER.tar.bz2 | tar xjvf -
+mv $APP-$VER $VER && cd $VER
+ln -sf k8-Linux k8
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
@@ -22,5 +23,6 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", pathJoin(apphome, "bin"))
+depends_on("k8")
+prepend_path("PATH", apphome)
 __END__

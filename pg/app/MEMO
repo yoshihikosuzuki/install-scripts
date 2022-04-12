@@ -1,7 +1,0 @@
-cat <<'__END__' >$APP/$VER.lua
-ではなく
-cat <<__END__ >$APP/$VER.lua
-にするように
-
-pbipa は conda エラーが出るので後回し
-

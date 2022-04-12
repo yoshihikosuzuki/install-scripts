@@ -3,8 +3,6 @@ shopt -s expand_aliases
 source $HOME/.bashrc
 set -eux
 
-PG_DIR=$HOME/tmp
-
 MODROOT=/hpgwork2/yoshihiko_s/app
 APP=seqkit
 VER=2.0.0

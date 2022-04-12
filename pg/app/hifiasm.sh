@@ -3,8 +3,6 @@ shopt -s expand_aliases
 source $HOME/.bashrc
 set -eux
 
-PG_DIR=$HOME/tmp
-
 MODROOT=/hpgwork2/yoshihiko_s/app
 APP=hifiasm
 VER=0.15.4
