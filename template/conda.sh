@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eu
+set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=

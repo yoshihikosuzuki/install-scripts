@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eu
+set -eux
 
 # LOAD DEPENDENCIES IF NEEDED
 module load python/VERSION
