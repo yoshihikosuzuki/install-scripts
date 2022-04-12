@@ -5,15 +5,14 @@ set -eux
 
 PG_DIR=$HOME/tmp
 
-MODROOT=/hpgwork2/yoshihiko_s/app/
+MODROOT=/hpgwork2/yoshihiko_s/app
 APP=gfatools
 VER=0.5
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-mv ${PG_DIR}/v$VER.tar.gz .
-tar xzvf v$VER.tar.gz
+wget -O - https://github.com/lh3/gfatools/archive/refs/tags/v$VER.tar.gz | tar xzvf -
 mv $APP-$VER $VER
 cd $VER && make
 

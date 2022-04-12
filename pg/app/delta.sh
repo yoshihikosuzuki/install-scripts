@@ -5,7 +5,7 @@ source $HOME/.bashrc
 set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=/hpgwork2/yoshihiko_s/app/
+MODROOT=/hpgwork2/yoshihiko_s/app
 APP=delta
 VER=0.12.1
 

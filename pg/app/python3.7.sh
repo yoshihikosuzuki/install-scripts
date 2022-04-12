@@ -4,7 +4,7 @@ source $HOME/.bashrc
 set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=/hpgwork2/yoshihiko_s/app/
+MODROOT=/hpgwork2/yoshihiko_s/app
 APP=python
 VER=3.7.12
 

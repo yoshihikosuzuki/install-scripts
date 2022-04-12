@@ -6,7 +6,7 @@ set -eux
 module load python/3.7.12
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=/hpgwork2/yoshihiko_s/app/
+MODROOT=/hpgwork2/yoshihiko_s/app
 APP=fatt
 VER=2021.09.05
 

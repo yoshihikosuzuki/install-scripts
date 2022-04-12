@@ -5,15 +5,14 @@ set -eux
 
 PG_DIR=$HOME/tmp
 
-MODROOT=/hpgwork2/yoshihiko_s/app/
+MODROOT=/hpgwork2/yoshihiko_s/app
 APP=canu
 VER=2.1.1
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-mv ${PG_DIR}/$APP-$VER.Linux-amd64.tar.xz .
-tar Jxvf $APP-$VER.Linux-amd64.tar.xz
+wget -O - https://github.com/marbl/canu/releases/download/v$VER/$APP-$VER.Linux-amd64.tar.xz | tar Jxvf -
 mv $APP-$VER $VER
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -25,5 +24,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", apphome.."/bin")
+prepend_path("PATH", pathJoin(apphome, "bin"))
 __END__

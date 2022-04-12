@@ -6,7 +6,7 @@ set -eux
 PG_DIR=$HOME/tmp
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=/hpgwork2/yoshihiko_s/app/
+MODROOT=/hpgwork2/yoshihiko_s/app
 APP=gepard
 VER=1.40.0
 
@@ -15,8 +15,7 @@ APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-mv ${PG_DIR}/v$VER.tar.gz .
-tar xzvf v$VER.tar.gz
+wget -O - https://github.com/univieCUBE/$APP/archive/refs/tags/v$VER.tar.gz | tar xzvf -
 mv $APP-$VER $VER && cd $VER
 cat <<__END__ >$APP
 #!/bin/sh

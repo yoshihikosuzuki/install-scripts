@@ -3,24 +3,16 @@ shopt -s expand_aliases
 source $HOME/.bashrc
 set -eux
 
-PG_DIR=$HOME/tmp
-
 MODROOT=/hpgwork2/yoshihiko_s/app
-APP=pbipa
-VER=1.3.2
+APP=winnowmap
+VER=2.03
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-#CONDA_SH=Miniconda3-latest-Linux-x86_64.sh
-CONDA_SH=Miniconda3-py37_4.9.2-Linux-x86_64.sh
-curl -O https://repo.anaconda.com/miniconda/${CONDA_SH}
-sh ${CONDA_SH} -b -p $APPDIR/$VER && rm ${CONDA_SH}
-cd $VER
-./bin/conda config --add channels defaults
-./bin/conda config --add channels conda-forge
-./bin/conda config --add channels bioconda
-./bin/conda install -y $APP=$VER
+wget -O - https://github.com/marbl/Winnowmap/archive/refs/tags/v$VER.tar.gz | tar xzvf -
+mv Winnowmap-$VER $VER
+cd $VER && make
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua

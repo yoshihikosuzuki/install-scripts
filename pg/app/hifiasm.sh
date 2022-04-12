@@ -5,15 +5,14 @@ set -eux
 
 PG_DIR=$HOME/tmp
 
-MODROOT=/hpgwork2/yoshihiko_s/app/
+MODROOT=/hpgwork2/yoshihiko_s/app
 APP=hifiasm
 VER=0.15.4
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-mv ${PG_DIR}/$VER.tar.gz .
-tar xzvf $VER.tar.gz
+wget -O - https://github.com/chhylp123/hifiasm/archive/refs/tags/$VER.tar.gz | tar xzvf -
 mv $APP-$VER $VER
 cd $VER && make
 

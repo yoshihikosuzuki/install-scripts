@@ -5,7 +5,7 @@ set -eux
 
 PG_DIR=$HOME/tmp
 
-MODROOT=/hpgwork2/yoshihiko_s/app/
+MODROOT=/hpgwork2/yoshihiko_s/app
 APP=seqkit
 VER=2.0.0
 
@@ -13,8 +13,7 @@ APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
 cd $APPDIR
 
-mv ${PG_DIR}/seqkit_linux_amd64.tar.gz .
-tar xzvf seqkit_linux_amd64.tar.gz
+wget -O - https://github.com/shenwei356/seqkit/releases/download/v$VER/seqkit_linux_amd64.tar.gz | tar xzvf -
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
