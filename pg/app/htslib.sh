@@ -5,7 +5,7 @@ set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpgwork2/yoshihiko_s/app
-APP=bcftools
+APP=htslib
 VER=1.15.1
 
 # MAKE THE MODULE DIRECTORY
@@ -29,4 +29,7 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
 prepend_path("PATH", pathJoin(apphome, "bin"))
+prepend_path("LIBRARY_PATH", pathJoin(apphome, "lib"))
+prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
+prepend_path("CPATH", pathJoin(apphome, "include"))
 __END__

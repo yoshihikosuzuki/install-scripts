@@ -3,18 +3,22 @@ shopt -s expand_aliases
 source $HOME/.bashrc
 set -eux
 
+# DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpgwork2/yoshihiko_s/app
-APP=go
-VER=1.18
+APP=samtools
+VER=1.15.1
 
+# MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-wget -O - https://go.dev/dl/go$VER.linux-amd64.tar.gz | tar zxvf -
-exit
-mv singularity $VER
-cd $VER && ./mconfig --prefix=$APPDIR/$VER
+# DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
+wget -O - https://github.com/samtools/$APP/releases/download/$VER/$APP-$VER.tar.bz2 | tar xjvf -
+mkdir $VER && cd $APP-$VER
+./configure --prefix=$APPDIR/$VER && make && make install
+cd .. && rm -r $APP-$VER
 
+# WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
 -- Default settings
