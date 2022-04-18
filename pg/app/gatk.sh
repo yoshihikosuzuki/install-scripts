@@ -13,7 +13,6 @@ APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-mkdir $VER && cd $VER
 wget https://github.com/broadinstitute/gatk/releases/download/$VER/$APP-$VER.zip
 unzip $APP-$VER.zip && mv $APP-$VER $VER && rm $APP-$VER.zip
 

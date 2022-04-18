@@ -3,6 +3,8 @@ shopt -s expand_aliases
 source $HOME/.bashrc
 set -eux
 
+module load openssl/1.1.1
+
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpgwork2/yoshihiko_s/app
 APP=python
@@ -16,7 +18,7 @@ mkdir -p $APPDIR && cd $APPDIR
 # NOTE: Needed to ensure that there is no python Lmod module previously installed;
 #       Otherwise `make install` does not install `setuptools` and `pip`.
 git clone https://github.com/python/cpython && cd cpython && git checkout 3.7
-./configure --prefix $APPDIR/$VER --with-ensurepip=install && make && make install
+./configure --prefix $APPDIR/$VER --with-ensurepip=install --with-openssl=$OPENSSL_PATH -- && make && make install
 cd .. && rm -rf cpython
 cd $VER/bin && ln -sf python3 python && ln -sf pip3.7 pip3 && ln -sf pip3 pip
 
@@ -30,6 +32,7 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
+depends_on("openssl/1.1.1")
 prepend_path("PATH", pathJoin(apphome, "bin"))
 prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
 prepend_path("LIBRARY_PATH", pathJoin(apphome, "lib"))

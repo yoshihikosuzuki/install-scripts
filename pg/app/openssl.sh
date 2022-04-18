@@ -3,24 +3,20 @@ shopt -s expand_aliases
 source $HOME/.bashrc
 set -eux
 
-module load python/3.7.12
-
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpgwork2/yoshihiko_s/app
-APP=bcftools
-VER=1.15.1
+APP=openssl
+VER=1.1.1
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget -O - https://github.com/samtools/$APP/releases/download/$VER/$APP-$VER.tar.bz2 | tar xjvf -
-mkdir $VER && cd $APP-$VER
-./configure --prefix=$APPDIR/$VER && make && make install
-cd .. && rm -r $APP-$VER
-cd $VER && mkdir -p lib/python3.7/site-packages
-PYTHONUSERBASE=$(pwd) pip install matplotlib --force-reinstall --user
+wget -O - https://github.com/openssl/openssl/archive/refs/tags/OpenSSL_1_1_1n.tar.gz | tar xzvf -
+mkdir $VER && cd openssl-OpenSSL_1_1_1n
+./config --prefix=$APPDIR/$VER --openssldir=$APPDIR/$VER/ssl && make && make install
+cd .. && rm -r openssl-OpenSSL_1_1_1n
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -32,7 +28,11 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("python/3.7.12")
 prepend_path("PATH", pathJoin(apphome, "bin"))
-prepend_path("PYTHONPATH", pathJoin(apphome, "lib/python3.7/site-packages"))
+prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
+prepend_path("LIBRARY_PATH", pathJoin(apphome, "lib"))
+prepend_path("LDFLAGS", "-L" .. pathJoin(apphome, "lib"), " ")
+prepend_path("CPATH", pathJoin(apphome, "include"))
+prepend_path("CPPFLAGS", "-I" .. pathJoin(apphome, "include"), " ")
+prepend_path("OPENSSL_PATH", apphome)
 __END__

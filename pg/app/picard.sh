@@ -3,24 +3,24 @@ shopt -s expand_aliases
 source $HOME/.bashrc
 set -eux
 
-module load python/3.7.12
-
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpgwork2/yoshihiko_s/app
-APP=bcftools
-VER=1.15.1
+APP=picard
+VER=2.27.1
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget -O - https://github.com/samtools/$APP/releases/download/$VER/$APP-$VER.tar.bz2 | tar xjvf -
-mkdir $VER && cd $APP-$VER
-./configure --prefix=$APPDIR/$VER && make && make install
-cd .. && rm -r $APP-$VER
-cd $VER && mkdir -p lib/python3.7/site-packages
-PYTHONUSERBASE=$(pwd) pip install matplotlib --force-reinstall --user
+mkdir $VER && cd $VER
+wget https://github.com/broadinstitute/picard/releases/download/$VER/picard.jar
+CMD=picard
+cat <<__END__ > $CMD
+#!/bin/bash
+java -jar $APPDIR/$VER/picard.jar \$*
+__END__
+chmod +x $CMD
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -32,7 +32,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("python/3.7.12")
-prepend_path("PATH", pathJoin(apphome, "bin"))
-prepend_path("PYTHONPATH", pathJoin(apphome, "lib/python3.7/site-packages"))
+prepend_path("PATH", apphome)
 __END__
