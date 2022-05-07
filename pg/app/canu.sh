@@ -22,5 +22,6 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
+depends_on("java/11.0.14")
 prepend_path("PATH", pathJoin(apphome, "bin"))
 __END__

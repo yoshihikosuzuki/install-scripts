@@ -3,20 +3,19 @@ shopt -s expand_aliases
 source $HOME/.bashrc
 set -eux
 
-PG_DIR=$HOME/tmp
-
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpgwork2/yoshihiko_s/app
-APP=igv
-VER=2.11.9
+APP=bedtools
+VER=2.30.0
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-mv ${PG_DIR}/IGV_$VER.zip .
-unzip IGV_$VER.zip && mv IGV_$VER $VER && rm IGV_$VER.zip
+wget -O - https://github.com/arq5x/bedtools2/releases/download/v$VER/$APP-$VER.tar.gz | tar xzvf -
+mv bedtools2 $VER && cd $VER
+make
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -28,6 +27,6 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("java/11.0.14")
-prepend_path("PATH", apphome)
+prepend_path("PATH", pathJoin(apphome, "bin"))
+prepend_path("PATH", pathJoin(apphome, "scripts"))
 __END__
