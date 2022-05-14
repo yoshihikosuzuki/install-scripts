@@ -1,32 +1,26 @@
 #!/bin/bash
 set -eux
 
-module load gcc/9.3.0 openssl/1.1.1 libffi/3.4.2 libsqlite3/3380500
+module load gcc/9.3.0
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/work/yoshihiko_s/app
-APP=python
-VER=3.7.13
+APP=libsqlite3
+VER=3380500
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-# NOTE: Needed to ensure that there is no python Lmod module previously installed;
-#       Otherwise `make install` does not install `setuptools` and `pip`.
-git clone https://github.com/python/cpython
-cd cpython
-git checkout 3.7
-./configure --prefix $APPDIR/$VER --with-ensurepip=install --with-openssl=$OPENSSL_PATH --enable-optimizations
+wget --no-check-certificate -O - https://www.sqlite.org/2022/sqlite-autoconf-$VER.tar.gz | tar xzvf -
+mkdir $VER
+cd sqlite-autoconf-$VER
+./configure --prefix=$APPDIR/$VER
 make
 make install
 cd ..
-rm -rf cpython
-cd $VER/bin
-ln -sf python3 python
-ln -sf pip3.7 pip3
-ln -sf pip3 pip
+rm -r sqlite-autoconf-$VER
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -38,7 +32,7 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("gcc/9.3.0", "openssl/1.1.1", "libffi/3.4.2", "libsqlite3/3380500")
+depends_on("gcc/9.3.0")
 prepend_path("PATH", pathJoin(apphome, "bin"))
 prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
 prepend_path("LIBRARY_PATH", pathJoin(apphome, "lib"))

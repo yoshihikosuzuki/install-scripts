@@ -1,7 +1,7 @@
 #!/bin/bash
-shopt -s expand_aliases
-source $HOME/.bashrc
 set -eux
+
+source /bio/package/gcc/setup9.sh
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/work/yoshihiko_s/app
@@ -13,7 +13,7 @@ APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget -O - https://gitlab.com/OldManProgrammer/unix-tree/-/archive/$VER/unix-tree-$VER.tar.gz | tar xzvf -
+wget --no-check-certificate -O - https://gitlab.com/OldManProgrammer/unix-tree/-/archive/$VER/unix-tree-$VER.tar.gz | tar xzvf -
 mv unix-tree-$VER $VER
 cd $VER && make
 

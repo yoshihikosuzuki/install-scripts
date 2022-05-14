@@ -2,8 +2,8 @@
 
 ## TODO
 
-- Lmod の global install?
-- hx,pg のインストールスクリプトを `$HOME/.bashrc` に依存しないようにする
+- hx,pg の `/bio/package` 以下のソフトウエアを Lmod module 化する
+- hx,pg のインストールスクリプトを `$HOME/.bashrc` に依存しないようにする、CentOS 6 でも使えるようにする
 - pg のプロキシ設定を `$HOME` 以下の設定ファイルに依存しないようにする、もしくは依存を明記する
 
 ## How to load a module
@@ -19,11 +19,11 @@ module load $APP/$VER   # Load a module
 | Name | Description | `$LMOD_INIT` |
 |:-|:-|:-|
 | Deigo | OIST's HPC |  `/apps/free/lmod/lmod/init/bash` |
-| hx | Morishita lab's HPC for non-human researches | `/home/yoshihiko_s/.local/lmod/lmod/init/bash` |
-| pg | Morishita lab's HPC for human researches | `/home/yoshihiko_s/.local/lmod/lmod/init/bash` |
-| Oakbridge-CX (OBCX) | UT's HPC | (Not installed yet) |
+| hx | Morishita lab's HPC for non-human researches | `/bio/lmod/lmod/init/bash` |
+| pg | Morishita lab's HPC for human researches | `/bio/lmod/lmod/init/bash` |
+| Oakbridge-CX (OBCX) | UT's HPC | ? |
 
-**NOTE**: The installation script of Lmod for hx and pg is `hx/local/01-lmod.sh` and `pg/local/01-lmod.sh`, respectively, in this repository.
+**NOTE**: The bundle of commands used for installing Lmod to hx and pg is summarized in `hx/bio/lmod.sh` and `pg/bio/lmod.sh` in this repository, respectively.
 
 ## List of `$MODROOT`s
 
@@ -42,12 +42,14 @@ module load $APP/$VER   # Load a module
 
 | Name | `$MODROOT` |
 |:-|:-|
+| Imported from `/bio/package` | TBA |
 | Yoshi's personal | `/work/yoshihiko_s/app/.modulefiles` |
 
 ### pg
 
 | Name | `$MODROOT` |
 |:-|:-|
+| Imported from `/bio/package` | TBA |
 | Yoshi's personal | `/hpgwork2/yoshihiko_s/app/.modulefiles` |
 
 ### Oakbridge-CX
@@ -56,9 +58,7 @@ module load $APP/$VER   # Load a module
 |:-|:-|
 |||
 
-## Supplementary information
-
-### Directory structure of modules and modulefiles
+## Directory structure of modules and modulefiles
 
 Given a root path where the modules are to be installed, `$MODROOT`, a module named `$APP` whose version is `$VER` along with its modulefile (i.e. a Lua file) is installed in the following directory structure:
 
@@ -83,7 +83,9 @@ $MODROOT/
 └── ...
 ```
 
-Every installation of a module overall takes the following form:
+## How to install a module
+
+In general, every installation of a module overall takes the following form (`template/general.sh` in this repository):
 
 ```bash
 #!/bin/bash
@@ -122,7 +124,19 @@ __END__
 
 Basically what you need to do for a specific software's installation are:
 
-1. Set `$MODROOT`, `$APP`, and `$VER` variables
-2. Modify the "DOWNLOAD AND INSTALL" part
-3. Modify the "Package settings" part in the modulefile
-4. Run the script
+0. Revert to the *default* shell environment (i.e. no modules, no functions/aliases, no user-appended PATH/etc.) as much as possible.
+1. Set `$MODROOT`, `$APP`, and `$VER` variables.
+2. Modify the "DOWNLOAD AND INSTALL" part and "LOAD DEPENDENCIES" (possibly while installing the software).
+3. Modify the "Package settings" part in the modulefile.
+4. Run the script.
+
+In the `template/` directory of this repository, there are template installation scripts for several installation types:
+
+| Installation Type | File name |
+|:-|:-|
+| Make | `make.sh` |
+| Autotools | `autotools.sh` |
+| Python/pip | `python.sh` |
+| Anaconda/Bioconda | `conda.sh` |
+| R | `R.sh` |
+| Singularity/Docker | `singularity.sh` |

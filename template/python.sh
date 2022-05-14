@@ -20,7 +20,7 @@ wget -O - /path/to/tarball | tar xzvf -
 mv $APP-$VER $VER && cd $VER && mkdir -p lib/pythonX.X/site-packages
 # Case 1: Via setuptools
 PYTHONUSERBASE=$(pwd) python setup.py install --user
-# Case 2: Via pip (TODO: Specify package names)
+# Case 2: Via pip (NOTE: Specify package names)
 PYTHONUSERBASE=$(pwd) pip install --force-reinstall --user PACKAGES
 
 # WRITE A MODULEFILE

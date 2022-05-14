@@ -28,4 +28,5 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 -- Package settings
 depends_on("XXX")
 prepend_path("PATH", apphome)
+...
 __END__
