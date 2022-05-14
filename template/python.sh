@@ -1,7 +1,9 @@
 #!/bin/bash
+module purge
 set -eux
 
 # LOAD DEPENDENCIES IF NEEDED
+module use /path/to/.modulefiles
 module load python/VERSION
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION

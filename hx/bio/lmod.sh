@@ -4,6 +4,7 @@
 sudo su bio -
 . /etc/profile
 cd /bio/package
+
 mkdir lmod
 cd lmod
 wget --no-check-certificate https://sourceforge.net/projects/lmod/files/lua-5.1.4.9.tar.bz2

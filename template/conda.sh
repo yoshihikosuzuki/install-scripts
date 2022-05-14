@@ -1,4 +1,5 @@
 #!/bin/bash
+module purge
 set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION

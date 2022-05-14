@@ -1,7 +1,9 @@
 #!/bin/bash
+module purge
 set -eux
 
 # LOAD DEPENDENCIES IF NEEDED
+module use /path/to/.modulefiles
 module load singularity/VERSION
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION

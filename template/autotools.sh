@@ -1,5 +1,10 @@
 #!/bin/bash
+module purge
 set -eux
+
+# LOAD DEPENDENCIES IF NEEDED
+module use /path/to/.modulefiles
+module load XXX
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=
@@ -28,6 +33,7 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
+depends_on("XXX")
 prepend_path("PATH", pathJoin(apphome, "bin"))
 prepend_path("LIBRARY_PATH", pathJoin(apphome, "lib"))
 prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))

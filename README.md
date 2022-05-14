@@ -89,9 +89,11 @@ In general, every installation of a module overall takes the following form (`te
 
 ```bash
 #!/bin/bash
+module purge
 set -eux
 
 # LOAD DEPENDENCIES IF NEEDED
+module use /path/to/.modulefiles
 module load XXX
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
