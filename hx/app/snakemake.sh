@@ -2,6 +2,9 @@
 module purge
 set -eux
 
+module use /bio/package/.modulefiles
+module load glibc/2.22
+
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/work/yoshihiko_s/app
 APP=snakemake
@@ -12,14 +15,15 @@ APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-sh Miniconda3-latest-Linux-x86_64.sh -b -p $VER
-rm Miniconda3-latest-Linux-x86_64.sh
+CONDA_SH=Miniconda3-py37_4.9.2-Linux-x86_64.sh
+curl -O https://repo.anaconda.com/miniconda/${CONDA_SH}
+sh ${CONDA_SH} -b -p $APPDIR/$VER
+rm ${CONDA_SH}
 cd $VER
 ./bin/conda config --add channels conda-forge
 ./bin/conda config --add channels defaults
 ./bin/conda config --add channels bioconda
-./bin/conda install -y $APP=$VER
+./bin/conda install --verbose -y $APP=$VER
 rm -rf pkgs
 
 # WRITE A MODULEFILE

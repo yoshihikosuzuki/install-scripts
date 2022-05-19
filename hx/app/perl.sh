@@ -2,27 +2,24 @@
 module purge
 set -eux
 
-module use /bio/package/.modulefiles
-module load gcc/9.3.0
-
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/work/yoshihiko_s/app
-APP=libsqlite3
-VER=3380500
+APP=perl
+VER=5.34.1
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget --no-check-certificate -O - https://www.sqlite.org/2022/sqlite-autoconf-$VER.tar.gz | tar xzvf -
+wget --no-check-certificate -O - https://www.cpan.org/src/5.0/perl-$VER.tar.gz | tar xzvf -
 mkdir $VER
-cd sqlite-autoconf-$VER
-./configure --prefix=$APPDIR/$VER
+cd perl-$VER
+./Configure -des -Dprefix=$APPDIR/$VER
 make
 make install
 cd ..
-rm -r sqlite-autoconf-$VER
+rm -f perl-$VER
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -34,7 +31,6 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("gcc/9.3.0")
 prepend_path("PATH", pathJoin(apphome, "bin"))
 prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
 prepend_path("LIBRARY_PATH", pathJoin(apphome, "lib"))

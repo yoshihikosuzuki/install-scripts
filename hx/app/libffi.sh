@@ -1,6 +1,8 @@
 #!/bin/bash
+module purge
 set -eux
 
+module use /bio/package/.modulefiles
 module load gcc/9.3.0
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION

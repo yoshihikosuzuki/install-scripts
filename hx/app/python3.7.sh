@@ -1,6 +1,9 @@
 #!/bin/bash
+module purge
 set -eux
 
+module use /bio/package/.modulefiles
+module use /work/yoshihiko_s/app/.modulefiles
 module load gcc/9.3.0 openssl/1.1.1 libffi/3.4.2 libsqlite3/3380500
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
