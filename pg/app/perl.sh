@@ -2,6 +2,8 @@
 module purge
 set -eux
 
+PG_DIR=$HOME/tmp
+
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpgwork2/yoshihiko_s/app
 APP=perl
@@ -12,7 +14,7 @@ APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget --no-check-certificate -O - https://www.cpan.org/src/5.0/perl-$VER.tar.gz | tar xzvf -
+mv perl-$VER.tar.gz .
 mkdir $VER
 cd perl-$VER
 ./Configure -des -Dprefix=$APPDIR/$VER
@@ -33,8 +35,4 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 -- Package settings
 prepend_path("PATH", pathJoin(apphome, "bin"))
 prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
-prepend_path("LIBRARY_PATH", pathJoin(apphome, "lib"))
-prepend_path("LDFLAGS", "-L" .. pathJoin(apphome, "lib"), " ")
-prepend_path("CPATH", pathJoin(apphome, "include"))
-prepend_path("CPPFLAGS", "-I" .. pathJoin(apphome, "include"), " ")
 __END__
