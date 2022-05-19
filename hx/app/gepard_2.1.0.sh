@@ -1,6 +1,5 @@
 #!/bin/bash
-shopt -s expand_aliases
-source $HOME/.bashrc
+module purge
 set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
@@ -14,7 +13,8 @@ mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
 wget -O - https://github.com/univieCUBE/$APP/archive/refs/tags/v$VER.tar.gz | tar xzvf -
-mv $APP-$VER $VER && cd $VER
+mv $APP-$VER $VER
+cd $VER
 cat <<__END__ >$APP
 #!/bin/sh
 java -cp $APPDIR/$VER/dist/Gepard-2.1.jar org.gepard.client.cmdline.CommandLine -matrix $APPDIR/$VER/resources/matrices/edna.mat \$*

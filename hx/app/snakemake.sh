@@ -1,6 +1,5 @@
 #!/bin/bash
-shopt -s expand_aliases
-source $HOME/.bashrc
+module purge
 set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
@@ -14,7 +13,8 @@ mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
 curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-sh Miniconda3-latest-Linux-x86_64.sh -b -p $VER && rm Miniconda3-latest-Linux-x86_64.sh
+sh Miniconda3-latest-Linux-x86_64.sh -b -p $VER
+rm Miniconda3-latest-Linux-x86_64.sh
 cd $VER
 ./bin/conda config --add channels conda-forge
 ./bin/conda config --add channels defaults

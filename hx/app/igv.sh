@@ -1,6 +1,5 @@
 #!/bin/bash
-shopt -s expand_aliases
-source $HOME/.bashrc
+module purge
 set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
@@ -14,7 +13,9 @@ mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
 wget https://data.broadinstitute.org/igv/projects/downloads/2.11/IGV_$VER.zip
-unzip IGV_$VER.zip && mv IGV_$VER $VER && rm IGV_$VER.zip
+unzip IGV_$VER.zip
+mv IGV_$VER $VER
+rm IGV_$VER.zip
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP

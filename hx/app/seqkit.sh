@@ -1,6 +1,5 @@
 #!/bin/bash
-shopt -s expand_aliases
-source $HOME/.bashrc
+module purge
 set -eux
 
 MODROOT=/work/yoshihiko_s/app

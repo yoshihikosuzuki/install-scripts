@@ -1,7 +1,9 @@
 #!/bin/bash
-shopt -s expand_aliases
-source $HOME/.bashrc
+module purge
 set -eux
+
+module use /bio/package/.modulefiles
+module load gcc/9.3.0
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/work/yoshihiko_s/app
@@ -14,7 +16,9 @@ mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
 wget -O - https://zlib.net/pigz/$APP-$VER.tar.gz | tar xzvf -
-mv $APP-$VER $VER && cd $VER && make
+mv $APP-$VER $VER
+cd $VER
+make
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
