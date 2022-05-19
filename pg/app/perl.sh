@@ -14,7 +14,7 @@ APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-mv perl-$VER.tar.gz .
+mv $PG_DIR/perl-$VER.tar.gz .
 mkdir $VER
 cd perl-$VER
 ./Configure -des -Dprefix=$APPDIR/$VER
