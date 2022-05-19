@@ -15,6 +15,7 @@ mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
 mv $PG_DIR/perl-$VER.tar.gz .
+tar xzvf perl-$VER.tar.gz
 mkdir $VER
 cd perl-$VER
 ./Configure -des -Dprefix=$APPDIR/$VER
