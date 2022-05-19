@@ -1,6 +1,4 @@
 #!/bin/bash
-shopt -s expand_aliases
-source $HOME/.bashrc
 set -eux
 
 D_DIR=$HOME/pg_transit

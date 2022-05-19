@@ -1,6 +1,5 @@
 #!/bin/bash
-
-module load singularity
+module purge
 
 APP=peregrine
 VER=1.6.3

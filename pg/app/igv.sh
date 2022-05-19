@@ -1,6 +1,5 @@
 #!/bin/bash
-shopt -s expand_aliases
-source $HOME/.bashrc
+module purge
 set -eux
 
 PG_DIR=$HOME/tmp
@@ -16,7 +15,9 @@ mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
 mv ${PG_DIR}/IGV_$VER.zip .
-unzip IGV_$VER.zip && mv IGV_$VER $VER && rm IGV_$VER.zip
+unzip IGV_$VER.zip
+mv IGV_$VER $VER
+rm IGV_$VER.zip
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
