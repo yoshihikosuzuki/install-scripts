@@ -22,7 +22,7 @@ cd perl-$VER
 make
 make install
 cd ..
-rm -f perl-$VER
+rm -rf perl-$VER
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
