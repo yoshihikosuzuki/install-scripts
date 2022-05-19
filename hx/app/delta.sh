@@ -1,7 +1,6 @@
 #!/bin/bash
-# NOTE: Need Rust
-shopt -s expand_aliases
-source $HOME/.bashrc
+# NOTE: Need Rust for installation
+module purge
 set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
@@ -16,7 +15,8 @@ mkdir -p $APPDIR && cd $APPDIR
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
 cargo install --locked --version $VER --root . git-delta
 mv bin $VER
-cd $VER && ln -sf delta diff
+cd $VER
+ln -sf delta diff
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
