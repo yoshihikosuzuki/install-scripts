@@ -1,8 +1,10 @@
 #!/bin/bash
-# NOTE: Need Rust
-shopt -s expand_aliases
-source $HOME/.bashrc
+# NOTE: Need Rust and glibc/2.15 only for installation
+module purge
 set -eux
+
+module use /bio/package/.modulefiles
+module load glibc/2.15
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpgwork2/yoshihiko_s/app
@@ -16,7 +18,8 @@ mkdir -p $APPDIR && cd $APPDIR
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
 cargo install --locked --version $VER --root . git-delta
 mv bin $VER
-cd $VER && ln -sf delta diff
+cd $VER
+ln -sf delta diff
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP

@@ -1,17 +1,22 @@
 #!/bin/bash
+module purge
 set -eux
 
+APP=dazz_db
+VER=2022.04.26
 MODROOT=/hpgwork2/yoshihiko_s/app
-APP=seqkit
-VER=2.0.0
 
-APPDIR=$MODROOT/$APP/$VER
+APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
 
-wget -O - https://github.com/shenwei356/seqkit/releases/download/v$VER/seqkit_linux_amd64.tar.gz | tar xzvf -
+git clone https://github.com/thegenemyers/DAZZ_DB
+mv DAZZ_DB $VER
+cd $VER
+make
 
-cd $MODROOT/.modulefiles && mkdir -p $APP
+cd $MODROOT/.modulefiles
+mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
 -- Default settings
 local modroot    = "$MODROOT"

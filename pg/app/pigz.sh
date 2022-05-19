@@ -1,6 +1,5 @@
 #!/bin/bash
-shopt -s expand_aliases
-source $HOME/.bashrc
+module purge
 set -eux
 
 PG_DIR=$HOME/tmp
@@ -15,9 +14,11 @@ APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-mv ${PG_DIR}/$APP-$VER.tar.gz .
+# mv ${PG_DIR}/$APP-$VER.tar.gz .
 tar xzvf $APP-$VER.tar.gz
-mv $APP-$VER $VER && cd $VER && make
+mv $APP-$VER $VER
+cd $VER
+make
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
