@@ -1,6 +1,5 @@
 #!/bin/bash
-shopt -s expand_aliases
-source $HOME/.bashrc
+module purge
 set -eux
 
 MODROOT=/hpgwork2/yoshihiko_s/app
@@ -12,7 +11,8 @@ mkdir -p $APPDIR && cd $APPDIR
 
 wget -O - https://github.com/lh3/minimap2/archive/refs/tags/v$VER.tar.gz | tar xzvf -
 mv $APP-$VER $VER
-cd $VER && make
+cd $VER
+make
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua

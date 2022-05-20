@@ -1,6 +1,5 @@
 #!/bin/bash
-shopt -s expand_aliases
-source $HOME/.bashrc
+module purge
 set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
@@ -14,7 +13,9 @@ mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
 wget https://github.com/broadinstitute/gatk/releases/download/$VER/$APP-$VER.zip
-unzip $APP-$VER.zip && mv $APP-$VER $VER && rm $APP-$VER.zip
+unzip $APP-$VER.zip
+mv $APP-$VER $VER
+rm $APP-$VER.zip
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP

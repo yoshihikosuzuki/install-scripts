@@ -1,9 +1,9 @@
 #!/bin/bash
-shopt -s expand_aliases
-source $HOME/.bashrc
+module purge
 set -eux
 
-module load python/3.7.12
+module use /hpgwork2/yoshihiko_s/app/.modulefiles
+module load python/3.7.13
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpgwork2/yoshihiko_s/app
@@ -15,9 +15,15 @@ APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-git clone https://github.com/mkasa/klab && cd klab && git checkout a66c78f
-./waf configure && ./waf build
-cd .. && mkdir $VER && mv klab/build/fatt $VER && rm -rf klab
+git clone https://github.com/mkasa/klab
+cd klab
+git checkout a66c78f
+./waf configure
+./waf build
+cd ..
+mkdir $VER
+mv klab/build/fatt $VER
+rm -rf klab
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
