@@ -1,5 +1,4 @@
 #!/bin/bash
-# source ~/.bashrc
 module purge
 set -eux
 
