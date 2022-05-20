@@ -1,10 +1,7 @@
 #!/bin/bash
-# NOTE: Install on ax71
+# NOTE: Installed on CentOS 7
 module purge
 set -eux
-
-# module use /bio/package/.modulefiles
-# module load glibc/2.14.1 glibc/2.15 glibc/2.17
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/work/yoshihiko_s/app
