@@ -2,6 +2,9 @@
 module purge
 set -eux
 
+module use /bio/package/.modulefiles
+module load gcc/7.5.0
+
 APP=fastk
 VER=2022.04.26
 MODROOT=/hpgwork2/yoshihiko_s/app

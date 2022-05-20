@@ -2,6 +2,9 @@
 module purge
 set -eux
 
+module use /bio/package/.modulefiles
+module load gcc/9.2.0
+
 APP=dazz_db
 VER=2022.04.26
 MODROOT=/hpgwork2/yoshihiko_s/app

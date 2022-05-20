@@ -1,4 +1,5 @@
 #!/bin/bash
+module purge
 set -eux
 
 MODROOT=/hpgwork2/yoshihiko_s/app

@@ -1,6 +1,5 @@
 #!/bin/bash
-shopt -s expand_aliases
-source $HOME/.bashrc
+module purge
 set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
