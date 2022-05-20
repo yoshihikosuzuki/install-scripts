@@ -1,31 +1,28 @@
 #!/bin/bash
-# NOTE: Install on ax71
 module purge
 set -eux
 
-# module use /bio/package/.modulefiles
-# module load glibc/2.14.1 glibc/2.15 glibc/2.17
+module use /bio/package/.modulefiles
+module load gcc/4.9.3
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/work/yoshihiko_s/app
-APP=snakemake
-VER=6.12.3
+APP=glibc
+VER=2.15
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-CONDA_SH=Miniconda3-py37_4.9.2-Linux-x86_64.sh
-curl -O https://repo.anaconda.com/miniconda/${CONDA_SH}
-sh ${CONDA_SH} -b -p $APPDIR/$VER
-rm ${CONDA_SH}
+wget --no-check-certificate -O - https://ftp.gnu.org/gnu/glibc/glibc-$VER.tar.gz | tar xzvf -
+mkdir $VER
 cd $VER
-./bin/conda config --add channels conda-forge
-./bin/conda config --add channels defaults
-./bin/conda config --add channels bioconda
-./bin/conda install --verbose -y $APP=$VER
-rm -rf pkgs
+LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed 's/:*$//')
+../glibc-$VER/configure --prefix=$APPDIR/$VER
+make
+cd ..
+rm -r glibc-$VER
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -37,5 +34,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", pathJoin(apphome, "bin"))
+append_path("LD_LIBRARY_PATH", apphome)
 __END__
