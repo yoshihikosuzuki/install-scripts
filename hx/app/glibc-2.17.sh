@@ -34,5 +34,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-append_path("LD_LIBRARY_PATH", apphome)
+prepend_path("LD_LIBRARY_PATH", apphome)
 __END__

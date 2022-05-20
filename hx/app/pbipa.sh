@@ -2,9 +2,6 @@
 module purge
 set -eux
 
-module use /bio/package/.modulefiles
-module load glibc/2.22
-
 MODROOT=/work/yoshihiko_s/app
 APP=pbipa
 VER=1.3.2
