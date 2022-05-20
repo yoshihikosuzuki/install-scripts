@@ -34,4 +34,8 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 -- Package settings
 depends_on("XXX")
 prepend_path("PATH", apphome)
+prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
+prepend_path("LDFLAGS", "-L" .. pathJoin(apphome, "lib"), " ")
+prepend_path("CPATH", pathJoin(apphome, "include"))
+prepend_path("CPPFLAGS", "-I" .. pathJoin(apphome, "include"), " ")
 __END__

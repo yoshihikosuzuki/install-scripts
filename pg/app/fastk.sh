@@ -1,9 +1,10 @@
 #!/bin/bash
+# Installed on CentOS 7
 module purge
 set -eux
 
 module use /bio/package/.modulefiles
-module load gcc/7.5.0
+module load gcc/9.2.0
 
 APP=fastk
 VER=2022.04.26

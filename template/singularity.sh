@@ -38,4 +38,5 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 -- Package settings
 depends_on("singularity/VERSION")
 prepend_path("PATH", apphome)
+setenv("SINGULARITY_BIND", "")
 __END__
