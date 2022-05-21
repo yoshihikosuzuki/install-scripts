@@ -1,6 +1,5 @@
 #!/bin/bash
-shopt -s expand_aliases
-source $HOME/.bashrc
+module purge
 set -eux
 
 MODROOT=/hpgwork2/yoshihiko_s/app
@@ -11,7 +10,9 @@ APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 git clone https://github.com/dfguan/purge_dups
-mv purge_dups $VER && cd $VER/src && make
+mv purge_dups $VER
+cd $VER/src
+make
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua

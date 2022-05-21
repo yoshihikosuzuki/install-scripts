@@ -1,7 +1,9 @@
 #!/bin/bash
-shopt -s expand_aliases
-source $HOME/.bashrc
+module purge
 set -eux
+
+module use /bio/package/.modulefiles
+module load gcc/9.2.0
 
 MODROOT=/hpgwork2/yoshihiko_s/app
 APP=hifiasm
@@ -12,7 +14,8 @@ mkdir -p $APPDIR && cd $APPDIR
 
 wget -O - https://github.com/chhylp123/hifiasm/archive/refs/tags/$VER.tar.gz | tar xzvf -
 mv $APP-$VER $VER
-cd $VER && make
+cd $VER
+make
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua

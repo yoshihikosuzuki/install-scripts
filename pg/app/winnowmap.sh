@@ -1,7 +1,9 @@
 #!/bin/bash
-shopt -s expand_aliases
-source $HOME/.bashrc
+module purge
 set -eux
+
+module use /bio/package/.modulefiles
+module load gcc/9.2.0
 
 MODROOT=/hpgwork2/yoshihiko_s/app
 APP=winnowmap
@@ -12,7 +14,8 @@ mkdir -p $APPDIR && cd $APPDIR
 
 wget -O - https://github.com/marbl/Winnowmap/archive/refs/tags/v$VER.tar.gz | tar xzvf -
 mv Winnowmap-$VER $VER
-cd $VER && make
+cd $VER
+make
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
@@ -23,5 +26,6 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
+depends_on("gcc/9.2.0")
 prepend_path("PATH", pathJoin(apphome, "bin"))
 __END__

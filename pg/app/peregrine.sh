@@ -1,16 +1,19 @@
 #!/bin/bash
 module purge
+set -eux
 
+MODROOT=/hpgwork2/yoshihiko_s/app
 APP=peregrine
 VER=1.6.3
-MODROOT=/apps/unit/BioinfoUgrp/Other
 
-APPDIR=$MODROOT/$APP/$VER
-mkdir -p $APPDIR
-cd $APPDIR
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR && cd $APPDIR
 
+mkdir $VER
+cd $VER
 singularity pull $APP.sif docker://cschin/$APP:$VER
-echo '#!/bin/sh' > $APP && echo "echo yes | singularity run $APPDIR/$APP.sif asm \$*" >> $APP && chmod +x $APP
+echo '#!/bin/sh' >$APP
+echo "echo yes | singularity run $APPDIR/$APP.sif asm \$*" >> $APP && chmod +x $APP
 
 cd $MODROOT/modulefiles/
 mkdir -p $APP
