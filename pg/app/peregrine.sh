@@ -12,27 +12,25 @@ mkdir -p $APPDIR && cd $APPDIR
 mkdir $VER
 cd $VER
 singularity pull $APP.sif docker://cschin/$APP:$VER
-echo '#!/bin/sh' >$APP
-echo "echo yes | singularity run $APPDIR/$APP.sif asm \$*" >> $APP && chmod +x $APP
+cat <<__END__ >$APP
+#!/bin/sh
+echo yes | singularity run $APPDIR/$VER/$APP.sif asm \$*
+__END__
+chmod +x $APP
 
-cd $MODROOT/modulefiles/
-mkdir -p $APP
-cat <<__END__ > $APP/$VER.lua
+cd $MODROOT/.modulefiles && mkdir -p $APP
+cat <<__END__ >$APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "$MODROOT"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
--- Package information
-whatis("Name: "..appname)
-whatis("Version: "..appversion)
-whatis("URL: ".."https://github.com/cschin/Peregrine")
-whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."assembly")
-whatis("Description: ".."Fast Genome Assembler Using SHIMMER Index.")
-
 -- Package settings
-depends_on("singularity")
 prepend_path("PATH", apphome)
+setenv("SINGULARITY_BIND", "/bio,/data,/glusterfs,/glusterfs2,/glusterfs3,/grid,/grid2,/home,/hpgdata,/hpgwork,/hpgwork2")
+execute {
+    cmd = "OS_VER=\$(cat /etc/redhat-release | grep -oP '[0-9]+' | head -1); if [ \"\${OS_VER}\" == '6' ]; then printf \"\\\\033[0;33m [WARN]\\\\033[0m \"; echo \"Module " .. appname .. "/" .. appversion .. " does not work on CentOS 6\"; fi",
+    modeA = { "load" }
+}
 __END__
