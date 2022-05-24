@@ -8,7 +8,7 @@ module load gcc/9.2.0
 
 MODROOT=/hpgwork2/yoshihiko_s/app
 APP=fastk
-VER=2022.04.26
+VER=2021.09.29
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
@@ -17,6 +17,7 @@ cd $APPDIR
 git clone https://github.com/thegenemyers/FASTK
 mv FASTK $VER
 cd $VER
+git checkout ba0d260
 make
 
 cd $MODROOT/.modulefiles
