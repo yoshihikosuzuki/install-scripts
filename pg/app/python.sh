@@ -4,7 +4,7 @@ set -eux
 
 module use /bio/package/.modulefiles
 module use /hpgwork2/yoshihiko_s/app/.modulefiles
-module load gcc/9.2.0 openssl/1.1.1d
+module load gcc/9.2.0 openssl/1.1.1d libsqlite3/3380500
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpgwork2/yoshihiko_s/app
@@ -36,7 +36,7 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("gcc/9.2.0")
+depends_on("gcc/9.2.0", "libsqlite3/3380500")
 prepend_path("PATH", pathJoin(apphome, "bin"))
 prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
 __END__

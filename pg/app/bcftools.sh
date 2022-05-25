@@ -4,7 +4,7 @@ set -eux
 
 source /bio/lmod/lmod/init/bash
 module use /hpgwork2/yoshihiko_s/app/.modulefiles
-module load python/3.7.13
+module load gcc/9.2.0
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpgwork2/yoshihiko_s/app
@@ -24,9 +24,6 @@ make
 make install
 cd ..
 rm -r $APP-$VER
-cd $VER
-mkdir -p lib/python3.7/site-packages
-PYTHONUSERBASE=$(pwd) pip install matplotlib --force-reinstall --user
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -38,7 +35,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("python/3.7.13")
 prepend_path("PATH", pathJoin(apphome, "bin"))
-prepend_path("PYTHONPATH", pathJoin(apphome, "lib/python3.7/site-packages"))
 __END__

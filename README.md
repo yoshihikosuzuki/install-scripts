@@ -1,11 +1,5 @@
 # Collection of scripts for installing Lmod modules on HPC
 
-## TODO
-
-- hx,pg の `/bio/package` 以下のソフトウエアを Lmod module 化する
-- hx,pg のインストールスクリプトを `$HOME/.bashrc` に依存しないようにする、CentOS 6 でも使えるようにする
-- pg のプロキシ設定を `$HOME` 以下の設定ファイルに依存しないようにする、もしくは依存を明記する
-
 ## How to load a module
 
 ```bash
@@ -22,8 +16,6 @@ module load $APP/$VER   # Load a module
 | hx | Morishita lab's HPC for non-human researches | `/bio/lmod/lmod/init/bash` |
 | pg | Morishita lab's HPC for human researches | `/bio/lmod/lmod/init/bash` |
 | Oakbridge-CX (OBCX) | UT's HPC | ? |
-
-**NOTE**: The bundle of commands used for installing Lmod to hx and pg is summarized in `hx/bio/lmod.sh` and `pg/bio/lmod.sh` in this repository, respectively.
 
 ## List of `$MODROOT`s
 
@@ -42,14 +34,14 @@ module load $APP/$VER   # Load a module
 
 | Name | `$MODROOT` |
 |:-|:-|
-| Imported from `/bio/package` | TBA |
+| Imported from `/bio/package` | `/bio/lmod/lmod/init/bash` |
 | Yoshi's personal | `/work/yoshihiko_s/app/.modulefiles` |
 
 ### pg
 
 | Name | `$MODROOT` |
 |:-|:-|
-| Imported from `/bio/package` | TBA |
+| Imported from `/bio/package` | `/bio/lmod/lmod/init/bash` |
 | Yoshi's personal | `/hpgwork2/yoshihiko_s/app/.modulefiles` |
 
 ### Oakbridge-CX

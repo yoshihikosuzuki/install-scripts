@@ -2,8 +2,7 @@
 module purge
 set -eux
 
-# module use /bio/package/.modulefiles
-# module load gcc/9.3.0
+PG_DIR=$HOME/tmp
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpgwork2/yoshihiko_s/app
@@ -15,7 +14,8 @@ APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget -O - https://www.sqlite.org/2022/sqlite-autoconf-$VER.tar.gz | tar xzvf -
+mv ${PG_DIR}/sqlite-autoconf-$VER.tar.gz .
+tar xzvf sqlite-autoconf-$VER.tar.gz
 mkdir $VER
 cd sqlite-autoconf-$VER
 ./configure --prefix=$APPDIR/$VER
@@ -34,7 +34,6 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
--- depends_on("gcc/9.3.0")
 prepend_path("PATH", pathJoin(apphome, "bin"))
 prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
 prepend_path("LIBRARY_PATH", pathJoin(apphome, "lib"))
