@@ -34,14 +34,14 @@ module load $APP/$VER   # Load a module
 
 | Name | `$MODROOT` |
 |:-|:-|
-| Imported from `/bio/package` | `/bio/lmod/lmod/init/bash` |
+| Imported from `/bio/package` | `/bio/package/.modulefiles` |
 | Yoshi's personal | `/work/yoshihiko_s/app/.modulefiles` |
 
 ### pg
 
 | Name | `$MODROOT` |
 |:-|:-|
-| Imported from `/bio/package` | `/bio/lmod/lmod/init/bash` |
+| Imported from `/bio/package` | `/bio/package/.modulefiles` |
 | Yoshi's personal | `/hpgwork2/yoshihiko_s/app/.modulefiles` |
 
 ### Oakbridge-CX
