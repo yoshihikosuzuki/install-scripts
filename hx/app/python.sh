@@ -24,6 +24,7 @@ make
 make install
 cd ..
 rm -rf cpython
+chmod -w $VER/lib/python3.7/site-packages
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -35,7 +36,7 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("gcc/9.3.0")
+depends_on("gcc/9.3.0", "openssl/1.1.1", "libffi/3.4.2", "libsqlite3/3380500")
 prepend_path("PATH", pathJoin(apphome, "bin"))
 prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
 prepend_path("LIBRARY_PATH", pathJoin(apphome, "lib"))
