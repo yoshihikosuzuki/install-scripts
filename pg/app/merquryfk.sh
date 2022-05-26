@@ -12,8 +12,8 @@ VER=2022.04.15
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-# git clone https://github.com/thegenemyers/MERQURY.FK
-# mv MERQURY.FK $VER
+git clone https://github.com/thegenemyers/MERQURY.FK
+mv MERQURY.FK $VER
 cd $VER
 RSCRIPT=$(which Rscript)
 for FILE in KatComp.c KatGC.c MerquryFK.c PloidyPlot.c asm_plotter.c cn_plotter.c hap_plotter.c; do
@@ -25,8 +25,8 @@ done
 make
 mkdir -p bin
 mv ASMplot CNplot HAPmaker HAPplot KatComp KatGC MerquryFK PloidyPlot bin/
-# mkdir -p lib/R
-# Rscript -e 'install.packages(c("argparse","R6","jsonlite","findpython","ggplot2","scales","cowplot","viridis"), lib="./lib/R")'
+mkdir -p lib/R
+Rscript -e 'install.packages(c("argparse","R6","jsonlite","findpython","ggplot2","scales","cowplot","viridis"), lib="./lib/R")'
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
