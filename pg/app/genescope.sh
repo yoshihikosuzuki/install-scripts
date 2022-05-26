@@ -1,14 +1,13 @@
 #!/bin/bash
-# Installed on CentOS 7
 module purge
 set -eux
 
 module use /hpgwork2/yoshihiko_s/app/.modulefiles
-module load R/4.2.0 gcc/9.2.0
+module load R/4.0.0
 
+MODROOT=/hpgwork2/yoshihiko_s/app
 APP=genescope
 VER=2021.03.26
-MODROOT=/hpgwork2/yoshihiko_s/app
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
@@ -25,7 +24,7 @@ install.packages('argparse', lib=local_lib_path)
 install.packages('.', repos=NULL, type="source", lib=local_lib_path)
 __END__
 Rscript install.R
-Rscript -e 'install.packages(c("R6", "jsonlite", "findpython"), lib="./lib/R")'
+Rscript -e 'install.packages(c("minpack.lm", "R6", "jsonlite", "argparse", "findpython"), lib="./lib/R")'
 RSCRIPT=$(which Rscript)
 sed -i "s|#!/usr/bin/env Rscript|#!${RSCRIPT} --vanilla|" GeneScopeFK.R
 mkdir -p bin

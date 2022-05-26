@@ -3,19 +3,14 @@ module purge
 set -eux
 
 MODROOT=/hpgwork2/yoshihiko_s/app
-APP=R
-VER=4.0.0
+APP=meryl
+VER=1.3
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-CONDA_SH=Miniconda3-py37_4.9.2-Linux-x86_64.sh
-curl -O https://repo.anaconda.com/miniconda/${CONDA_SH}
-sh ${CONDA_SH} -b -p $APPDIR/$VER
-rm ${CONDA_SH}
-cd $VER
-./bin/conda install -c conda-forge -c defaults -y r-base=$VER
-rm -rf pkgs
+wget -O - https://github.com/marbl/meryl/releases/download/v$VER/meryl-$VER.Linux-amd64.tar.xz | tar Jxvf -
+mv $APP-$VER $VER
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua

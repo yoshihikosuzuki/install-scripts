@@ -3,8 +3,8 @@ module purge
 set -eux
 
 MODROOT=/hpgwork2/yoshihiko_s/app
-APP=R
-VER=4.0.0
+APP=verkko
+VER=1.0
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
@@ -14,7 +14,7 @@ curl -O https://repo.anaconda.com/miniconda/${CONDA_SH}
 sh ${CONDA_SH} -b -p $APPDIR/$VER
 rm ${CONDA_SH}
 cd $VER
-./bin/conda install -c conda-forge -c defaults -y r-base=$VER
+./bin/conda install -c conda-forge -c bioconda -c defaults -y $APP=$VER
 rm -rf pkgs
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -26,5 +26,10 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
+depends_on("snakemake")
 prepend_path("PATH", pathJoin(apphome, "bin"))
+execute {
+    cmd = "OS_VER=\$(cat /etc/redhat-release | grep -oP '[0-9]+' | head -1); if [ \"\${OS_VER}\" == '6' ]; then printf \"\\\\033[0;33m [WARN]\\\\033[0m \"; echo \"Module " .. appname .. "/" .. appversion .. " does not work on CentOS 6\"; fi",
+    modeA = { "load" }
+}
 __END__
