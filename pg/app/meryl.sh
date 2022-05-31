@@ -21,5 +21,6 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
+depends_on("gcc/9.2.0")
 prepend_path("PATH", pathJoin(apphome, "bin"))
 __END__

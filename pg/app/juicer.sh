@@ -15,7 +15,7 @@ mv $APP-$VER/misc/* .
 rm -rf scripts/README.md $APP-$VER
 sed -i 's|juiceDir="/opt/juicer"|juiceDir="."|' scripts/juicer.sh
 cat <<__END__ >juicer_copy_scripts_dir
-'#!/bin/sh
+#!/bin/sh
 ln -sf $APPDIR/scripts/ .
 __END__
 chmod +x * scripts/common/*
