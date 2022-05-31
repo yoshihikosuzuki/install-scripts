@@ -2,15 +2,17 @@
 module purge
 set -eux
 
+module use /hpgwork2/yoshihiko_s/app/.modulefiles
+module load busco_downloads/5_2022.05.31
+
 MODROOT=/hpgwork2/yoshihiko_s/app
 APP=busco
 VER=5.3.2
 
 APPDIR=$MODROOT/$APP/$VER
-mkdir -p $APPDIR
-cd $APPDIR
+mkdir -p $APPDIR && cd $APPDIR
 
-singularity pull busco.sif docker://ezlabgva/busco:v${VER}_cv1
+# singularity pull busco.sif docker://ezlabgva/busco:v${VER}_cv1
 
 # NOTE: Copying Augustus config dir to CWD because it can be overwritten by another BUSCO job
 cat <<__END__ >busco_sif
@@ -23,7 +25,7 @@ export SINGULARITYENV_AUGUSTUS_CONFIG_PATH=\$(pwd)/augustus_config
 echo "\""Copying Augustus config dir to \${SINGULARITYENV_AUGUSTUS_CONFIG_PATH}"\""
 rm -rf \${SINGULARITYENV_AUGUSTUS_CONFIG_PATH}
 busco_sif cp -r /usr/local/config \${SINGULARITYENV_AUGUSTUS_CONFIG_PATH}
-busco_sif busco \$*
+busco_sif busco --offline --download_path $BUSCO_DOWNLOADS \$*
 __END__
 cat <<__END__ >generate_plot.py
 #!/bin/bash
@@ -32,7 +34,7 @@ __END__
 chmod +x busco_sif busco generate_plot.py
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
-cat <<__END__ > $APP/$VER.lua
+cat <<__END__ >$APP/$VER.lua
 -- Default settings
 local modroot    = "$MODROOT"
 local appname    = myModuleName()
