@@ -29,5 +29,5 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 prepend_path("PATH", apphome)
 unsetenv("PERL5LIB")
 setenv("PERL_BADLANG", "0")
-setenv("SINGULARITY_BIND", "/bio,/data,/glusterfs,/glusterfs2,/glusterfs3,/grid,/grid2,/home,/hpgdata,/hpgwork,/hpgwork2")
+setenv("SINGULARITY_BIND", "/data,/glusterfs,/glusterfs2,/glusterfs3,/grid,/grid2,/home,/hpgdata,/hpgwork,/hpgwork2")
 __END__

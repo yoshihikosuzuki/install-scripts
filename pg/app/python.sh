@@ -25,6 +25,8 @@ make install
 cd ..
 rm -rf cpython
 chmod -w $VER/lib/python3.8/site-packages
+cd bin
+ln -sf python3 python
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP

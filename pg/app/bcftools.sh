@@ -2,7 +2,6 @@
 module purge
 set -eux
 
-source /bio/lmod/lmod/init/bash
 module use /hpgwork2/yoshihiko_s/app/.modulefiles
 module load gcc/9.2.0
 
