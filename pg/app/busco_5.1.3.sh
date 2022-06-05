@@ -43,5 +43,5 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
 prepend_path("PATH", apphome)
-setenv("SINGULARITY_BIND", "/bio,/data,/glusterfs,/glusterfs2,/glusterfs3,/grid,/grid2,/home,/hpgdata,/hpgwork,/hpgwork2")
+setenv("SINGULARITY_BIND", "/bio,/data,/glusterfs,/glusterfs2,/glusterfs3,/grid2,/home,/hpgdata,/hpgwork,/hpgwork2")
 __END__

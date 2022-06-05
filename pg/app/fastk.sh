@@ -1,14 +1,13 @@
 #!/bin/bash
-# Installed on CentOS 7
 module purge
-set -eux
-
+set -eu
 module use /bio/package/.modulefiles
-module load gcc/9.2.0
+module load gcc/9.2.0 openssl/1.1.1d curl/7.65.3 zlib/1.2.3.6 xz/5.2.5
+set -x
 
 MODROOT=/hpgwork2/yoshihiko_s/app
 APP=fastk
-VER=2021.09.29
+VER=2022.04.26
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
@@ -17,7 +16,12 @@ cd $APPDIR
 git clone https://github.com/thegenemyers/FASTK
 mv FASTK $VER
 cd $VER
-git checkout ba0d260
+# git checkout ba0d260
+make clean
+cat <<__END__ >HTSLIB/htslib_static.mk
+HTSLIB_static_LDFLAGS = -L/bio/package/openssl/1.1.1d/lib -L/bio/package/curl/curl-7.65.3/lib/.libs -L/hpgwork2/yoshihiko_s/app/zlib/1.2.3.6/lib -L/hpgwork2/yoshihiko_s/app/xz/5.2.5/lib -Wl,-rpath=/bio/package/openssl/1.1.1d/lib -Wl,-rpath=/bio/package/curl/curl-7.65.3/lib/.libs -Wl,-rpath=/hpgwork2/yoshihiko_s/app/zlib/1.2.3.6/lib -Wl,-rpath=/hpgwork2/yoshihiko_s/app/xz/5.2.5/lib
+HTSLIB_static_LIBS = -lz -lm -lbz2 -llzma -lcurl -lrt
+__END__
 make
 
 cd $MODROOT/.modulefiles
@@ -31,8 +35,4 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
 prepend_path("PATH", apphome)
-execute {
-    cmd = "OS_VER=\$(cat /etc/redhat-release | grep -oP '[0-9]+' | head -1); if [ \"\${OS_VER}\" == '6' ]; then printf \"\\\\033[0;33m [WARN]\\\\033[0m \"; echo \"Module " .. appname .. "/" .. appversion .. " does not work on CentOS 6\"; fi",
-    modeA = { "load" }
-}
 __END__
