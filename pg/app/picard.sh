@@ -32,4 +32,5 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
 prepend_path("PATH", apphome)
+prepend_path("PICARD", pathJoin(apphome, "picard.jar"))
 __END__

@@ -35,4 +35,5 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 depends_on("meryl/1.3")
 prepend_path("PATH", apphome)
 prepend_path("R_LIBS", pathJoin(apphome, "lib/R"))
+setenv("MERQURY", apphome)
 __END__
