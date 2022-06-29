@@ -18,6 +18,7 @@ mkdir -p $APPDIR && cd $APPDIR
 wget -O - https://github.com/arq5x/bedtools2/releases/download/v$VER/$APP-$VER.tar.gz | tar xzvf -
 mv bedtools2 $VER
 cd $VER
+export LDFLAGS="-L/bio/package/gcc/gcc9/lib64 -Wl,-rpath=/bio/package/gcc/gcc9/lib64 -L/bio/package/gcc/gcc9/lib -Wl,-rpath=/bio/package/gcc/gcc9/lib $LDFLAGS"
 make
 
 # WRITE A MODULEFILE
