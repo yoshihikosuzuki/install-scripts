@@ -48,7 +48,7 @@ module load $APP/$VER   # Load a module
 
 | Name | `$MODROOT` |
 |:-|:-|
-|||
+| Yoshi's personal | `/work/00/gg57/g57015/app/.modulefiles` |
 
 ## Directory structure of modules and modulefiles
 
