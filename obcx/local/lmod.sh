@@ -1,24 +1,35 @@
 #!/bin/bash
+module purge
+set -eu
+set -x
 
-mkdir -p $HOME/.local
-cd $HOME/.local
+ROOT="/work/00/gg57/share/yoshi-tools"
+LUA_VERSION=5.1.4.9
+LMOD_VERSION=8.7
+
+mkdir -p ${ROOT}
+cd ${ROOT}
 
 mkdir lmod
 cd lmod
-wget --no-check-certificate https://sourceforge.net/projects/lmod/files/lua-5.1.4.9.tar.bz2
-wget --no-check-certificate https://sourceforge.net/projects/lmod/files/Lmod-8.6.tar.bz2
+wget --no-check-certificate https://sourceforge.net/projects/lmod/files/lua-${LUA_VERSION}.tar.bz2
+wget --no-check-certificate https://sourceforge.net/projects/lmod/files/Lmod-${LMOD_VERSION}.tar.bz2
 
-tar jxvf lua-5.1.4.9.tar.bz2
-cd lua-5.1.4.9
+tar jxvf lua-${LUA_VERSION}.tar.bz2
+cd lua-${LUA_VERSION}
 mkdir install
 ./configure --prefix=$(readlink -f ./install)
 make
 make install
 cd ..
 
-tar jxvf Lmod-8.6.tar.bz2
-cd Lmod-8.6
-./configure --prefix=$HOME/.local --with-lua_include=$HOME/.local/lmod/lua-5.1.4.9/install/include/ --with-lua=$HOME/.local/lmod/lua-5.1.4.9/install/bin/lua --with-luac=$HOME/.local/lmod/lua-5.1.4.9/install/bin/luac
+tar jxvf Lmod-${LMOD_VERSION}.tar.bz2
+cd Lmod-${LMOD_VERSION}
+./configure \
+    --prefix=$ROOT \
+    --with-lua_include=$ROOT/lmod/lua-${LUA_VERSION}/install/include/ \
+    --with-lua=$ROOT/lmod/lua-${LUA_VERSION}/install/bin/lua \
+    --with-luac=$ROOT/lmod/lua-${LUA_VERSION}/install/bin/luac
 make install
 
-# NOTE: To activate the installed Lmod, run `$ source /home/g57015/.local/lmod/lmod/init/bash` (Or add this to `$HOME/.bashrc`).
+# NOTE: To activate the installed Lmod, run `$ source /work/00/gg57/share/yoshi-tools/lmod/lmod/init/bash` (Or add this to `$HOME/.bashrc`).
