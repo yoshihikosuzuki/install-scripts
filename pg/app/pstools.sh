@@ -6,13 +6,13 @@ module use /bio/package/.modulefiles
 module load gcc/9.2.0
 
 MODROOT=/hpgwork2/yoshihiko_s/app
-APP=hifiasm
-VER=0.18.7
+APP=pstools
+VER=0.1
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-wget -O - https://github.com/chhylp123/hifiasm/archive/refs/tags/$VER.tar.gz | tar xzvf -
+wget -O - https://github.com/shilpagarg/pstools/archive/refs/tags/v$VER.tar.gz | tar xzvf -
 mv $APP-$VER $VER
 cd $VER
 make
@@ -26,5 +26,6 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
+depends_on("gcc/9.2.0")
 prepend_path("PATH", apphome)
 __END__

@@ -2,21 +2,22 @@
 module purge
 set -eux
 
-module use /bio/package/.modulefiles
-module load gcc/9.2.0
-
+# DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpgwork2/yoshihiko_s/app
-APP=hifiasm
-VER=0.18.7
+APP=jtk
+VER=2022.09.28
 
+# MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-wget -O - https://github.com/chhylp123/hifiasm/archive/refs/tags/$VER.tar.gz | tar xzvf -
-mv $APP-$VER $VER
-cd $VER
-make
+# DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
+# NOTE: Make sure RUST version is sufficient
+git clone https://github.com/ban-m/jtk.git
+mv jtk $VER
+cargo build --release
 
+# WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
 -- Default settings
@@ -26,5 +27,6 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", apphome)
+depends_on("minimap2/2.24")
+prepend_path("PATH", pathJoin(apphome, "target/release/"))
 __END__
