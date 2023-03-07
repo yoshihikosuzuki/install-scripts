@@ -7,23 +7,22 @@ set -x
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/work/00/gg57/g57015/app
-APP=python
-VER=3.8.15
+APP=glibc
+VER=2.25
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-git clone https://github.com/python/cpython
-cd cpython
-git checkout 3.8
-./configure --prefix $APPDIR/$VER --with-ensurepip=install --with-openssl=$OPENSSL_PATH --enable-optimizations
+wget --no-check-certificate -O - https://ftp.gnu.org/gnu/glibc/glibc-$VER.tar.gz | tar xzvf -
+mkdir $VER
+cd $VER
+LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed 's/:*$//')
+../glibc-$VER/configure --prefix=$APPDIR/$VER
 make
-make install
 cd ..
-rm -rf cpython
-# chmod -w $VER/lib/python3.11/site-packages
+rm -r glibc-$VER
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -35,8 +34,6 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("gcc/7.5.0", "openssl/1.1.1")
-setenv("PYTHONUSERBASE", apphome)
-prepend_path("PATH", pathJoin(apphome, "bin"))
-prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
+depends_on("gcc/7.5.0")
+prepend_path("LD_LIBRARY_PATH", apphome)
 __END__
