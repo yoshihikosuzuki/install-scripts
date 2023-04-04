@@ -2,18 +2,15 @@
 module purge
 set -eux
 
-module use /bio/package/.modulefiles
-module load gcc/9.2.0
-
 MODROOT=/nfs/data05/yoshihiko_s/app
-APP=winnowmap
-VER=2.03
+APP=yahs
+VER=1.1
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-wget -O - https://github.com/marbl/Winnowmap/archive/refs/tags/v$VER.tar.gz | tar xzvf -
-mv Winnowmap-$VER $VER
+git clone https://github.com/c-zhou/yahs
+mv yahs $VER
 cd $VER
 make
 
@@ -26,6 +23,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("gcc/9.2.0")
-prepend_path("PATH", pathJoin(apphome, "bin"))
+prepend_path("PATH", apphome)
 __END__

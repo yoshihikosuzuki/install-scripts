@@ -3,7 +3,7 @@ module purge
 set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=zlib
 VER=1.2.3.6
 

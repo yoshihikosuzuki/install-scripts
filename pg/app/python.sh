@@ -3,11 +3,11 @@ module purge
 set -eux
 
 module use /bio/package/.modulefiles
-module use /hpgwork2/yoshihiko_s/app/.modulefiles
-module load gcc/9.2.0 openssl/1.1.1d libsqlite3/3380500
+module use /nfs/data05/yoshihiko_s/app/.modulefiles
+module load gcc/9.2.0 openssl/1.1.1d libsqlite3/3380500 libffi/3.4.4
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=python
 VER=3.8.13
 
@@ -19,13 +19,14 @@ mkdir -p $APPDIR && cd $APPDIR
 git clone https://github.com/python/cpython
 cd cpython
 git checkout 3.8
+export LDFLAGS="-Wl,-rpath=/nfs/data05/yoshihiko_s/app/libffi/3.4.4/lib64 -Wl,-rpath=/nfs/data05/yoshihiko_s/app/libsqlite3/3380500/lib $LDFLAGS"
 ./configure --prefix $APPDIR/$VER --with-ensurepip=install --with-openssl=$OPENSSL_PATH --enable-optimizations
 make
 make install
 cd ..
-rm -rf cpython
+# rm -rf cpython
 chmod -w $VER/lib/python3.8/site-packages
-cd bin
+cd $VER/bin
 ln -sf python3 python
 
 # WRITE A MODULEFILE
@@ -38,7 +39,6 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("gcc/9.2.0", "libsqlite3/3380500")
 prepend_path("PATH", pathJoin(apphome, "bin"))
 prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
 __END__

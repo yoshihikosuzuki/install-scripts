@@ -2,7 +2,7 @@
 module purge
 set -eux
 
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=3d-dna
 VER=180922
 

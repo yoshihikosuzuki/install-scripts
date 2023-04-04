@@ -2,13 +2,10 @@
 module purge
 set -eux
 
-# module use /hpgwork2/yoshihiko_s/app/.modulefiles
-module load gcc/9.2.0
-
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/nfs/data05/yoshihiko_s/app
-APP=whatshap
-VER=1.2.1
+APP=pretext
+VER=0.0.2
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
@@ -20,7 +17,7 @@ curl -O https://repo.anaconda.com/miniconda/${CONDA_SH}
 sh ${CONDA_SH} -b -p $APPDIR/$VER
 rm ${CONDA_SH}
 cd $VER
-PYTHONUSERBASE=$(pwd) ./bin/pip install --user --force-reinstall $APP==$VER
+./bin/conda install -c conda-forge -c bioconda -c defaults -y pretext-suite=$VER
 rm -rf pkgs
 
 # WRITE A MODULEFILE
