@@ -5,7 +5,7 @@ module use /bio/package/.modulefiles
 module load gcc/9.2.0 openssl/1.1.1d curl/7.65.3 zlib/1.2.3.6 xz/5.2.5
 set -x
 
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=fastk
 VER=2022.04.26
 
@@ -19,7 +19,7 @@ cd $VER
 # git checkout ba0d260
 make clean
 cat <<__END__ >HTSLIB/htslib_static.mk
-HTSLIB_static_LDFLAGS = -L/bio/package/openssl/1.1.1d/lib -L/bio/package/curl/curl-7.65.3/lib/.libs -L/hpgwork2/yoshihiko_s/app/zlib/1.2.3.6/lib -L/hpgwork2/yoshihiko_s/app/xz/5.2.5/lib -Wl,-rpath=/bio/package/openssl/1.1.1d/lib -Wl,-rpath=/bio/package/curl/curl-7.65.3/lib/.libs -Wl,-rpath=/hpgwork2/yoshihiko_s/app/zlib/1.2.3.6/lib -Wl,-rpath=/hpgwork2/yoshihiko_s/app/xz/5.2.5/lib
+HTSLIB_static_LDFLAGS = -L/bio/package/openssl/1.1.1d/lib -L/bio/package/curl/curl-7.65.3/lib/.libs -L/nfs/data05/yoshihiko_s/app/zlib/1.2.3.6/lib -L/nfs/data05/yoshihiko_s/app/xz/5.2.5/lib -Wl,-rpath=/bio/package/openssl/1.1.1d/lib -Wl,-rpath=/bio/package/curl/curl-7.65.3/lib/.libs -Wl,-rpath=/nfs/data05/yoshihiko_s/app/zlib/1.2.3.6/lib -Wl,-rpath=/nfs/data05/yoshihiko_s/app/xz/5.2.5/lib
 HTSLIB_static_LIBS = -lz -lm -lbz2 -llzma -lcurl -lrt
 __END__
 make

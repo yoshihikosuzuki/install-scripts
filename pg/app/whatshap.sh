@@ -3,12 +3,12 @@ module purge
 set -eux
 
 # module use /hpgwork2/yoshihiko_s/app/.modulefiles
-module load gcc/9.2.0
+# module load gcc/9.2.0
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/nfs/data05/yoshihiko_s/app
 APP=whatshap
-VER=1.2.1
+VER=1.7
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
@@ -20,6 +20,8 @@ curl -O https://repo.anaconda.com/miniconda/${CONDA_SH}
 sh ${CONDA_SH} -b -p $APPDIR/$VER
 rm ${CONDA_SH}
 cd $VER
+# export LDFLAGS="-L/hpgwork2/yoshihiko_s/app/zlib/1.2.3.6/lib -L/hpgwork2/yoshihiko_s/app/xz/5.2.5/lib -Wl,-rpath=/hpgwork2/yoshihiko_s/app/zlib/1.2.3.6/lib -Wl,-rpath=/hpgwork2/yoshihiko_s/app/xz/5.2.5/lib ${LDFLAGS}"
+# export LIBS="-lz -lm -lbz2 -llzma -lcurl -lrt"
 PYTHONUSERBASE=$(pwd) ./bin/pip install --user --force-reinstall $APP==$VER
 rm -rf pkgs
 

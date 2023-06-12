@@ -2,10 +2,10 @@
 module purge
 set -eux
 
-module use /hpgwork2/yoshihiko_s/app/.modulefiles
+module use /nfs/data05/yoshihiko_s/app/.modulefiles
 module load R/4.0.0 gcc/9.2.0
 
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=merquryfk
 VER=2022.04.15
 
