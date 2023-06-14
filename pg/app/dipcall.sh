@@ -4,21 +4,16 @@ set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/nfs/data05/yoshihiko_s/app
-APP=whatshap
-VER=1.7
+APP=dipcall
+VER=0.3
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-CONDA_SH=Miniconda3-py37_4.9.2-Linux-x86_64.sh
-curl -O https://repo.anaconda.com/miniconda/${CONDA_SH}
-sh ${CONDA_SH} -b -p $APPDIR/$VER
-rm ${CONDA_SH}
-cd $VER
-PYTHONUSERBASE=$(pwd) ./bin/pip install --user --force-reinstall $APP==$VER
-rm -rf pkgs
+wget -O - https://github.com/lh3/dipcall/releases/download/v${VER}/dipcall-${VER}_x64-linux.tar.bz2 | tar xjf -
+mv dipcall.kit $VER
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -30,5 +25,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", pathJoin(apphome, "bin"))
+prepend_path("PATH", apphome)
 __END__
