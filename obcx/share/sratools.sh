@@ -3,16 +3,14 @@ module purge
 set -eux
 
 MODROOT=/work/00/gg57/share/yoshi-tools
-APP=minimap2
-VER=2.24
+APP=sratools
+VER=3.0.2
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-wget -O - https://github.com/lh3/minimap2/archive/refs/tags/v$VER.tar.gz | tar xzvf -
-mv $APP-$VER $VER
-cd $VER
-make
+wget -O - https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/${VER}/sratoolkit.${VER}-centos_linux64.tar.gz | tar xzvf -
+mv sratoolkit.${VER}-centos_linux64 ${VER}
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
@@ -23,7 +21,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("k8")
-prepend_path("PATH", apphome)
-prepend_path("PATH", pathJoin(apphome, "misc"))
+prepend_path("PATH", pathJoin(apphome, "bin"))
 __END__

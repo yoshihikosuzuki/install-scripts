@@ -1,9 +1,13 @@
 #!/bin/bash
 module purge
 set -eu
+unset PYTHONPATH
+unset CONDA_PREFIX
+# module load python/3.8.15
 set -x
 
-MODROOT=/work/00/gg57/g57015/app
+MODROOT=/work/00/gg57/share/yoshi-tools
+# MODROOT=/work/00/gg57/g57015/app-hoge
 APP=repeatmasker
 VER=4.1.2.p1
 
