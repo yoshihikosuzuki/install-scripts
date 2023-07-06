@@ -3,9 +3,9 @@ module purge
 set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=jtk
-VER=2022.09.28
+VER=2023.03.21
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
@@ -15,6 +15,7 @@ mkdir -p $APPDIR && cd $APPDIR
 # NOTE: Make sure RUST version is sufficient
 git clone https://github.com/ban-m/jtk.git
 mv jtk $VER
+cd $VER
 cargo build --release
 
 # WRITE A MODULEFILE

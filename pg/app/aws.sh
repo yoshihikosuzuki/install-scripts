@@ -16,7 +16,6 @@ mkdir -p $APPDIR && cd $APPDIR
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
 mv ${PG_DIR}/awscli-exe-linux-x86_64.zip .
 unzip awscli-exe-linux-x86_64.zip
-exit
 ./aws/install -i $APPDIR/$VER/aws-cli -b $APPDIR/$VER/bin
 
 # WRITE A MODULEFILE
@@ -29,5 +28,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", apphome)
+prepend_path("PATH", pathJoin(apphome, "bin"))
 __END__
