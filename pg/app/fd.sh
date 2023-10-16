@@ -2,21 +2,20 @@
 module purge
 set -eux
 
-module use /bio/package/.modulefiles
-module load gcc/9.2.0
-
+# DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/nfs/data05/yoshihiko_s/app
-APP=hifiasm
-VER=0.19.7
+APP=fd
+VER=8.7.0
 
+# MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-wget -O - https://github.com/chhylp123/hifiasm/archive/refs/tags/$VER.tar.gz | tar xzvf -
-mv $APP-$VER $VER
-cd $VER
-make
+# DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
+wget -O - https://github.com/sharkdp/fd/releases/download/v${VER}/fd-v${VER}-x86_64-unknown-linux-musl.tar.gz | tar xzvf -
+mv fd-v${VER}-x86_64-unknown-linux-musl $VER
 
+# WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
 -- Default settings
