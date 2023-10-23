@@ -4,8 +4,8 @@ set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/nfs/data05/yoshihiko_s/app
-APP=minibusco
-VER=0.2.1
+APP=compleasm
+VER=0.2.2
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
