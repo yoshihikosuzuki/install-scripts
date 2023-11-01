@@ -42,7 +42,7 @@ module load $APP/$VER   # Load a module
 | Name | `$MODROOT` |
 |:-|:-|
 | Imported from `/bio/package` | `/bio/package/.modulefiles` |
-| Yoshi's personal | `/hpgwork2/yoshihiko_s/app/.modulefiles` |
+| Yoshi's personal | `/nfs/data05/yoshihiko_s/app/.modulefiles` |
 
 ### Oakbridge-CX
 
