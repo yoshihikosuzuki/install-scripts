@@ -2,34 +2,24 @@
 module purge
 set -eux
 
+module load gcc/9
+
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/nfs/data05/yoshihiko_s/app
-APP=cromwell
-VER=86
+APP=last
+VER=1512
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-mkdir $VER && cd $VER
-wget https://github.com/broadinstitute/cromwell/releases/download/${VER}/cromwell-${VER}.jar
-
-CMD=cromwell
-cat <<__END__ >$CMD
-#!/bin/bash
-java -jar $APPDIR/$VER/cromwell-${VER}.jar \$*
-__END__
-chmod +x $CMD
-
-CMD=cromwell-config
-cat <<__END__ >$CMD
-#!/bin/bash
-CONFIG=$1
-shift
-java -Dconfig.file=${CONFIG} -jar $APPDIR/$VER/cromwell-${VER}.jar \$*
-__END__
-chmod +x $CMD
+wget -O - https://gitlab.com/mcfrith/last/-/archive/$VER/last-$VER.tar.gz | tar xzvf -
+cd $APP-$VER
+make
+mv bin $APPDIR/$VER
+cd ..
+rm -r $APP-$VER
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -41,6 +31,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("java/11")
 prepend_path("PATH", apphome)
 __END__
