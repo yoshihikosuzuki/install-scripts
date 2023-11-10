@@ -2,31 +2,34 @@
 module purge
 set -eux
 
-# LOAD DEPENDENCIES IF NEEDED
+## LOAD DEPENDENCIES IF NEEDED
 module use /path/to/.modulefiles
-module load R/VERSION
+module load R/xxx
 
-# DEFINE WHERE TO INSTALL, APP NAME AND VERSION
+## DEFINE WHERE TO INSTALL, APP NAME, AND VERSION
 MODROOT=
 APP=
 VER=
 
-# MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
+MODFILE_ROOT=$MODROOT/.modulefiles
+MODFILE_DIR=$MODFILE_ROOT/$APP
+
+## DOWNLOAD SOURCE CODE, ETC., AND PREPARE `$APPDIR/$VER`
 mkdir -p $APPDIR && cd $APPDIR
+wget -O - /path/to/xxx.tar.gz | tar xzvf -
+mv $APP-$VER $VER   # rename $APP-$VER as appropriate
 
-# DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-# NOTE: Options for `tar` depend on the file type
-wget -O - /path/to/tarball | tar xzvf -
-# NOTE: `$APP-$VER` depends on the downloaded file name
-mv $APP-$VER $VER && cd $VER && mkdir -p lib/R
-# Install dependencies (NOTE: packages depend on the software)
-Rscript -e 'install.packages(c("XXX", "YYY"), lib="./lib/R")'
-# Use vanilla R for custom scripts (NOTE: command depends on the software)
-for FILE in *.R; do sed -i 's|#!/usr/bin/env Rscript|#!/usr/bin/env -S Rscript --vanilla|' ${FILE}; done
+## INSTALL
+cd $VER
+mkdir -p lib/R
+Rscript -e 'install.packages(c("xxx", "yyy"), lib="./lib/R")'
+for FILE in *.R; do
+    sed -i 's|#!/usr/bin/env Rscript|#!/usr/bin/env -S Rscript --vanilla|' ${FILE}
+done
 
-# WRITE A MODULEFILE
-cd $MODROOT/.modulefiles && mkdir -p $APP
+## MODULEFILE
+mkdir -p $MODFILE_DIR && cd $MODFILE_DIR
 cat <<__END__ >$APP/$VER.lua
 -- Default settings
 local modroot    = "$MODROOT"
@@ -35,7 +38,7 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("R/VERSION")
+depends_on("R/xxx")
 prepend_path("PATH", apphome)
 prepend_path("R_LIBS", pathJoin(apphome, "lib/R"))
 __END__

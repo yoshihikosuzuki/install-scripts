@@ -2,32 +2,36 @@
 module purge
 set -eux
 
-# LOAD DEPENDENCIES IF NEEDED
+## LOAD DEPENDENCIES IF NEEDED
 module use /path/to/.modulefiles
-module load singularity/VERSION
+module load singularity/xxx
 
-# DEFINE WHERE TO INSTALL, APP NAME AND VERSION
+## DEFINE WHERE TO INSTALL, APP NAME, AND VERSION
 MODROOT=
 APP=
 VER=
 
-# MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
+MODFILE_ROOT=$MODROOT/.modulefiles
+MODFILE_DIR=$MODFILE_ROOT/$APP
+
+## DOWNLOAD SOURCE CODE, ETC., AND PREPARE `$APPDIR/$VER`
 mkdir -p $APPDIR && cd $APPDIR
 
-# DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
+## INSTALL
+mkdir -p $VER
 cd $VER
-# If Docker container (NOTE: URL depends on the software):
-singularity pull $APP.sif docker://google/$APP:$VER
-# Make "stand-alone commands" (NOTE: replace the command names accordingly):
-for CMD in XXX YYY; do
-    echo '#!/bin/sh' >$CMD
-    echo "singularity exec $APPDIR/$VER/$APP.sif $CMD \$*" >>$CMD
+singularity pull $APP.sif docker://google/$APP:$VER   # rename URL as appropriate
+for CMD in xxx yyy; do
+    cat <<__END__ >$CMD
+#!/bin/bash
+singularity exec $APPDIR/$VER/$APP.sif $CMD \$*
+__END__
     chmod +x $CMD
 done
 
-# WRITE A MODULEFILE
-cd $MODROOT/.modulefiles && mkdir -p $APP
+## MODULEFILE
+mkdir -p $MODFILE_DIR && cd $MODFILE_DIR
 cat <<__END__ >$APP/$VER.lua
 -- Default settings
 local modroot    = "$MODROOT"
@@ -36,7 +40,7 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("singularity/VERSION")
+depends_on("singularity/xxx")
 prepend_path("PATH", apphome)
 setenv("SINGULARITY_BIND", "")
 __END__

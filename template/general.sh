@@ -2,24 +2,29 @@
 module purge
 set -eux
 
-# LOAD DEPENDENCIES IF NEEDED
+## LOAD DEPENDENCIES IF NEEDED
 module use /path/to/.modulefiles
-module load XXX
+module load xxx
 
-# DEFINE WHERE TO INSTALL, APP NAME AND VERSION
+## DEFINE WHERE TO INSTALL, APP NAME, AND VERSION
 MODROOT=
 APP=
 VER=
 
-# MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
-mkdir -p $APPDIR && cd $APPDIR
+MODFILE_ROOT=$MODROOT/.modulefiles
+MODFILE_DIR=$MODFILE_ROOT/$APP
 
-# DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
+## DOWNLOAD SOURCE CODE, ETC., AND PREPARE `$APPDIR/$VER`
+mkdir -p $APPDIR && cd $APPDIR
 ...
 
-# WRITE A MODULEFILE
-cd $MODROOT/.modulefiles && mkdir -p $APP
+## INSTALL
+cd $VER
+...
+
+## MODULEFILE
+mkdir -p $MODFILE_DIR && cd $MODFILE_DIR
 cat <<__END__ >$APP/$VER.lua
 -- Default settings
 local modroot    = "$MODROOT"
