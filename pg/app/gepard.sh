@@ -3,8 +3,9 @@ module purge
 set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=gepard
+# VER=1.40.0
 VER=2.1.0
 
 # MAKE THE MODULE DIRECTORY
@@ -14,6 +15,11 @@ mkdir -p $APPDIR && cd $APPDIR
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
 wget -O - https://github.com/univieCUBE/$APP/archive/refs/tags/v$VER.tar.gz | tar xzvf -
 mv $APP-$VER $VER && cd $VER
+# cat <<__END__ >$APP   # VER=1.40.0
+# #!/bin/sh
+# java -cp $APPDIR/$VER/dist/Gepard-1.40.jar org.gepard.client.cmdline.CommandLine -matrix $APPDIR/$VER/resources/matrices/edna.mat \$*
+# __END__
+# chmod +x $APP
 cat <<__END__ >$APP
 #!/bin/sh
 java -cp $APPDIR/$VER/dist/Gepard-2.1.jar org.gepard.client.cmdline.CommandLine -matrix $APPDIR/$VER/resources/matrices/edna.mat \$*

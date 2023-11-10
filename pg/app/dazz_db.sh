@@ -7,7 +7,7 @@ module load gcc/9.2.0
 
 APP=dazz_db
 VER=2022.04.26
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR

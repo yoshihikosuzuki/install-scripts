@@ -2,7 +2,7 @@
 module purge
 set -eux
 
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=bedops
 VER=2.4.40
 

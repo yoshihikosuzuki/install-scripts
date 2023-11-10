@@ -5,8 +5,9 @@ set -eux
 module use /bio/package/.modulefiles
 module load gcc/9.2.0
 
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=hisim
+# VER=2021.09.19
 VER=2021.11.18
 
 APPDIR=$MODROOT/$APP
@@ -16,6 +17,7 @@ cd $APPDIR
 git clone https://github.com/thegenemyers/HI.SIM
 mv HI.SIM $VER
 cd $VER
+# git checkout 6417ac3   # VER=2021.09.19
 git checkout d05807c
 sed -i 's/clang/gcc/' Makefile
 make

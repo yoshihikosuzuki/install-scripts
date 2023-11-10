@@ -2,7 +2,7 @@
 module purge
 set -eux
 
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=seqkit
 VER=2.0.0
 

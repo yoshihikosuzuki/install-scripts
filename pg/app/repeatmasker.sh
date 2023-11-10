@@ -3,7 +3,7 @@ module purge
 set -eu
 set -x
 
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=repeatmasker
 VER=4.1.2.p1
 

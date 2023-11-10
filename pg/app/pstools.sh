@@ -5,7 +5,7 @@ set -eux
 module use /bio/package/.modulefiles
 module load gcc/9.2.0
 
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=pstools
 VER=0.1
 

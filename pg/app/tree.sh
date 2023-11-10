@@ -6,7 +6,7 @@ module use /bio/package/.modulefiles
 module load gcc/9.2.0
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=tree
 VER=2.0.2
 

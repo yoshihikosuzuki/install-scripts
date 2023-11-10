@@ -2,11 +2,11 @@
 module purge
 set -eux
 
-module use /hpgwork2/yoshihiko_s/app/.modulefiles
+module use /nfs/data05/yoshihiko_s/app/.modulefiles
 module load python/3.7.13
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=fatt
 VER=2021.09.05
 

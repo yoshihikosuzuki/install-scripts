@@ -3,7 +3,7 @@
 D_DIR=$HOME/pg_transit
 
 # NOTE: Make sure $APPDIR exists on pg
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=busco_downloads
 VER=5_2022.05.31
 APPDIR=$MODROOT/$APP/$VER

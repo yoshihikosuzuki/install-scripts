@@ -7,7 +7,7 @@ set -x
 
 APP=daligner
 VER=2021.03.30
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR

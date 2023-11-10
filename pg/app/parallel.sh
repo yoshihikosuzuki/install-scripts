@@ -4,7 +4,7 @@ set -eux
 
 PG_DIR=$HOME/tmp
 
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=parallel
 VER=20210622
 

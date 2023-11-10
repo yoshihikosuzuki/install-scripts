@@ -2,10 +2,10 @@
 module purge
 set -eux
 
-module use /hpgwork2/yoshihiko_s/app/.modulefiles
+module use /nfs/data05/yoshihiko_s/app/.modulefiles
 module load busco_downloads/5_2022.05.31
 
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=busco
 VER=5.3.2
 

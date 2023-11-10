@@ -2,11 +2,11 @@
 module purge
 set -eux
 
-module use /hpgwork2/yoshihiko_s/app/.modulefiles
+module use /nfs/data05/yoshihiko_s/app/.modulefiles
 module load python/3.8.13
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=/hpgwork2/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=fastk_python
 VER=1.0
 
