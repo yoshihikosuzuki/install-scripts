@@ -4,29 +4,20 @@ set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/nfs/data05/yoshihiko_s/app
-APP=samtools
-VER=1.18
+APP=syri
+VER=1.6.3
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
+# DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
 wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
 bash Miniforge3-$(uname)-$(uname -m).sh -b -p $APPDIR/$VER
 cd $VER
+./bin/mamba install -y python=3.8
 ./bin/mamba install -c bioconda -y $APP=$VER
 rm -rf pkgs
-
-
-# DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-# wget -O - https://github.com/samtools/$APP/releases/download/$VER/$APP-$VER.tar.bz2 | tar xjvf -
-# mkdir $VER
-# cd $APP-$VER
-# ./configure --prefix=$APPDIR/$VER
-# make
-# make install
-# cd ..
-# rm -r $APP-$VER
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
