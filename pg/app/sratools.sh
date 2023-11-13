@@ -2,30 +2,21 @@
 module purge
 set -eux
 
-## LOAD DEPENDENCIES IF NEEDED
-module use /path/to/.modulefiles
-module load xxx
-
 ## DEFINE WHERE TO INSTALL, APP NAME, AND VERSION
-MODROOT=
-APP=
-VER=
+MODROOT=/nfs/data05/yoshihiko_s/app
+APP=sratools
+VER=3.0.7
 
 APPDIR=$MODROOT/$APP
 MODFILE_DIR=$MODROOT/.modulefiles/$APP
 
 ## DOWNLOAD SOURCE CODE, ETC., AND PREPARE `$APPDIR/$VER`
 mkdir -p $APPDIR && cd $APPDIR
-wget -O - /path/to/tarball | tar xzvf -
+wget -O - https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/${VER}/sratoolkit.${VER}-centos_linux64.tar.gz | tar xzvf -
+mv sratoolkit.${VER}-centos_linux64 ${VER}
 
 ## INSTALL
-mkdir $VER
-cd $APP-$VER   # rename $APP-$VER as appropriate
-./configure --prefix=$APPDIR/$VER   # if using autotools
-make
-make install
-cd ..
-rm -r $APP-$VER
+# cd $VER
 
 ## MODULEFILE
 mkdir -p $MODFILE_DIR && cd $MODFILE_DIR
@@ -37,10 +28,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("xxx")
 prepend_path("PATH", pathJoin(apphome, "bin"))
-prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
-prepend_path("LDFLAGS", "-L" .. pathJoin(apphome, "lib"), " ")
-prepend_path("CPATH", pathJoin(apphome, "include"))
-prepend_path("CPPFLAGS", "-I" .. pathJoin(apphome, "include"), " ")
 __END__

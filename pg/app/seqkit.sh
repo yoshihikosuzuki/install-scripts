@@ -4,7 +4,7 @@ set -eux
 
 MODROOT=/nfs/data05/yoshihiko_s/app
 APP=seqkit
-VER=2.0.0
+VER=2.6.0
 
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR

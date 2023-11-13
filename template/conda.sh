@@ -8,8 +8,7 @@ APP=
 VER=
 
 APPDIR=$MODROOT/$APP
-MODFILE_ROOT=$MODROOT/.modulefiles
-MODFILE_DIR=$MODFILE_ROOT/$APP
+MODFILE_DIR=$MODROOT/.modulefiles/$APP
 
 ## DOWNLOAD SOURCE CODE, ETC., AND PREPARE `$APPDIR/$VER`
 mkdir -p $APPDIR && cd $APPDIR
@@ -26,7 +25,7 @@ rm -rf pkgs
 
 ## MODULEFILE
 mkdir -p $MODFILE_DIR && cd $MODFILE_DIR
-cat <<__END__ >$APP/$VER.lua
+cat <<__END__ >$VER.lua
 -- Default settings
 local modroot    = "$MODROOT"
 local appname    = myModuleName()
