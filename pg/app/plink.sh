@@ -2,19 +2,22 @@
 module purge
 set -eux
 
+# DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/nfs/data05/yoshihiko_s/app
-APP=pbsv
-VER=2.9.0
+APP=plink
+VER=2.00
 
+# MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
-bash Miniforge3-$(uname)-$(uname -m).sh -b -p $APPDIR/$VER
+# DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
+mkdir -p $VER
 cd $VER
-./bin/mamba install -c bioconda -c conda-forge -c defaults -y $APP=$VER
-rm -rf pkgs
+wget https://s3.amazonaws.com/plink2-assets/plink2_linux_amd_avx2_20231212.zip
+unzip plink2_linux_amd_avx2_20231212.zip
 
+# WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
 -- Default settings
@@ -24,5 +27,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", pathJoin(apphome, "bin"))
+prepend_path("PATH", apphome)
 __END__
