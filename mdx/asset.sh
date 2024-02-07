@@ -3,16 +3,15 @@ module purge
 set -eux
 
 MODROOT=/large/yoshihiko_s/app
-APP=winnowmap
-VER=2.03
+APP=asset
+VER=1.0.3
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-wget -O - https://github.com/marbl/Winnowmap/archive/refs/tags/v$VER.tar.gz | tar xzvf -
-mv Winnowmap-$VER $VER
-cd $VER
-# NOTE: remove #include<sys/sysctl.h> from $APPDIR/$VER/ext/meryl/src/utility/src/utility/system.C
+git clone https://github.com/dfguan/asset
+mv asset $VER
+cd $VER/src
 make
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -24,5 +23,7 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
+depends_on("samtools", "bedtools", "bwa", "minimap2")
 prepend_path("PATH", pathJoin(apphome, "bin"))
+prepend_path("PATH", pathJoin(apphome, "scripts"))
 __END__

@@ -28,5 +28,5 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
 prepend_path("PATH", apphome)
-setenv("SINGULARITY_BIND", "")
+setenv("SINGULARITY_BIND", "/home,/fast,/large")
 __END__
