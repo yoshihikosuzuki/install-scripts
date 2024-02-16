@@ -7,7 +7,7 @@ module load gcc/9.2.0
 
 MODROOT=/nfs/data05/yoshihiko_s/app
 APP=hifiasm
-VER=0.19.7
+VER=0.19.8
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR

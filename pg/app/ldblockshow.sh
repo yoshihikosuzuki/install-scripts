@@ -2,22 +2,22 @@
 module purge
 set -eux
 
-module use /nfs/data05/yoshihiko_s/app/.modulefiles
-module load python/3.8.13
-
+# DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/nfs/data05/yoshihiko_s/app
-APP=make_telomere_bed
-VER=2024.01.24
+APP=ldblockshow
+VER=1.40
 
+# MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-mkdir -p $VER
-# git clone https://github.com/yoshihikosuzuki/make_telomere_bed
-cd make_telomere_bed
-git pull
-PYTHONUSERBASE=$APPDIR/$VER pip install --force-reinstall --user .
+# DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
+# wget -O - https://github.com/hewm2008/LDBlockShow/archive/v${VER}.tar.gz | tar xzvf -
+# mv LDBlockShow-$VER $VER
+cd $VER
+chmod -R +x bin
 
+# WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
 -- Default settings
@@ -27,7 +27,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on(atleast("python", "3"), "trf")
 prepend_path("PATH", pathJoin(apphome, "bin"))
-prepend_path("PYTHONPATH", pathJoin(apphome, "lib/python3.8/site-packages"))
 __END__
