@@ -15,17 +15,6 @@ cd $VER
 ./bin/mamba install -c bioconda -y $APP=$VER
 rm -rf pkgs
 
-# CONDA_SH=Miniconda3-py37_4.9.2-Linux-x86_64.sh
-# curl -O https://repo.anaconda.com/miniconda/${CONDA_SH}
-# sh ${CONDA_SH} -b -p $APPDIR/$VER
-# rm ${CONDA_SH}
-# cd $VER
-# ./bin/conda config --add channels defaults
-# ./bin/conda config --add channels conda-forge
-# ./bin/conda config --add channels bioconda
-# ./bin/conda install -y $APP=$VER
-# rm -rf pkgs
-
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
 -- Default settings
