@@ -4,22 +4,21 @@ set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/nfs/data05/yoshihiko_s/app
-APP=bcftools
-VER=1.19
+APP=shapeit
+VER=5.1.1
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget -O - https://github.com/samtools/$APP/releases/download/$VER/$APP-$VER.tar.bz2 | tar xjvf -
-mkdir $VER
-cd $APP-$VER
-./configure --prefix=$APPDIR/$VER
-make
-# make install
-# cd ..
-# rm -r $APP-$VER
+mkdir -p $VER
+cd $VER
+for NAME in ligate phase_common phase_rare simulate switch xcftools; do
+    wget https://github.com/odelaneau/shapeit5/releases/download/v${VER}/${NAME}_static
+    chmod +x ${NAME}_static
+    ln -sf ${NAME}_static ${NAME}
+done
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -31,5 +30,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", pathJoin(apphome, "bin"))
+prepend_path("PATH", apphome)
 __END__

@@ -4,22 +4,17 @@ set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/nfs/data05/yoshihiko_s/app
-APP=bcftools
-VER=1.19
+APP=glnexus
+VER=1.4.1
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget -O - https://github.com/samtools/$APP/releases/download/$VER/$APP-$VER.tar.bz2 | tar xjvf -
 mkdir $VER
-cd $APP-$VER
-./configure --prefix=$APPDIR/$VER
-make
-# make install
-# cd ..
-# rm -r $APP-$VER
+cd $VER
+wget https://github.com/dnanexus-rnd/GLnexus/releases/download/v1.4.1/glnexus_cli
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -31,5 +26,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", pathJoin(apphome, "bin"))
+prepend_path("PATH", apphome)
 __END__
