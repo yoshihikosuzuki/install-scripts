@@ -3,7 +3,7 @@
 module load singularity
 
 APP=deepvariant
-VER=1.1.0
+VER=1.6.0
 MODROOT=/apps/unit/BioinfoUgrp/Other
 
 APPDIR=$MODROOT/$APP/$VER
@@ -11,7 +11,11 @@ mkdir -p $APPDIR
 cd $APPDIR
 
 singularity pull $APP.sif docker://google/$APP:$VER
-for CMD in run_deepvariant make_examples call_variants postprocess_variants; do echo '#!/bin/sh' > $CMD && echo "singularity exec $APPDIR/$APP.sif $CMD \$*" >> $CMD && chmod +x $CMD; done
+for CMD in run_deepvariant make_examples call_variants postprocess_variants; do
+    echo '#!/bin/sh' >$CMD
+    echo "singularity exec $APPDIR/$APP.sif $CMD \$*" >> $CMD
+    chmod +x $CMD
+done
 
 cd $MODROOT/modulefiles/
 mkdir -p $APP

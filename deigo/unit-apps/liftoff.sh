@@ -1,30 +1,22 @@
 #!/bin/bash
-set -eu
+module purge
+set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpcshare/appsunit/MyersU
-APP=verkko
-VER=2.0
+APP=liftoff
+VER=1.6.3
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-CONDA_SH=Miniconda3-py39_23.5.2-0-Linux-x86_64.sh
-curl -O https://repo.anaconda.com/miniconda/${CONDA_SH}
-sh ${CONDA_SH} -b -p $APPDIR/$VER
-rm ${CONDA_SH}
+wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh -b -p $APPDIR/$VER
 cd $VER
-./bin/conda install -c conda-forge -c bioconda -c defaults -y $APP=$VER
+./bin/mamba install -c bioconda -y $APP=$VER
 rm -rf pkgs
-
-cd lib/verkko
-cd scripts
-for FILE in *.py; do sed -i "s|#\!/usr/bin/env python|#\!${APPDIR}/${VER}/bin/python|" ${FILE}; done
-cd ..
-# cd profiles
-# -q centos7.q, -pe smp, -l mem_total={mem_gb}G    in `slurm-sge-submit.sh`
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
