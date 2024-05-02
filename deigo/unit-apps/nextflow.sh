@@ -1,10 +1,11 @@
 #!/bin/bash
 set -eu
+module load java-jdk/21
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/hpcshare/appsunit/MyersU
 APP=nextflow
-VER=21.10.6
+VER=23.10.1
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
@@ -12,7 +13,7 @@ mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
 mkdir $VER && cd $VER
-wget -qO- https://github.com/nextflow-io/nextflow/releases/download/v$VER/nextflow-$VER-all | bash
+curl -fsSL https://get.nextflow.io | bash
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -24,5 +25,6 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
+depends_on("java-jdk/21")
 prepend_path("PATH", apphome)
 __END__
