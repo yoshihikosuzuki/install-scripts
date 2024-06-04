@@ -3,24 +3,17 @@ module purge
 set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=/large/yoshihiko_s/app
-APP=hapdiff
-VER=0.9
+MODROOT=/nfs/data05/yoshihiko_s/app
+APP=btop
+VER=1.3.2
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-mkdir -p $VER
-cd $VER
-singularity pull $APP.sif docker://mkolmogo/$APP:$VER
-for CMD in hapdiff.py; do
-    echo '#!/bin/sh' >$CMD
-    echo "singularity exec $APPDIR/$VER/$APP.sif $CMD \$*" >>$CMD
-    chmod +x $CMD
-done
-# NOTE: need `pip install altair`
+wget -O - https://github.com/aristocratos/btop/releases/download/v${VER}/btop-x86_64-linux-musl.tbz | tar xjvf -
+mv btop ${VER}
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -32,6 +25,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", apphome)
-setenv("SINGULARITY_BIND", "/home,/fast,/large")
+prepend_path("PATH", pathJoin(apphome, "bin"))
 __END__

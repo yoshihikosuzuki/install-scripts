@@ -4,7 +4,7 @@ set -eux
 
 MODROOT=/nfs/data05/yoshihiko_s/app
 APP=pbmm2
-VER=1.9.0
+VER=1.13.1
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR

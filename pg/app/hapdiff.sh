@@ -3,7 +3,7 @@ module purge
 set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=/large/yoshihiko_s/app
+MODROOT=/nfs/data05/yoshihiko_s/app
 APP=hapdiff
 VER=0.9
 
@@ -20,7 +20,6 @@ for CMD in hapdiff.py; do
     echo "singularity exec $APPDIR/$VER/$APP.sif $CMD \$*" >>$CMD
     chmod +x $CMD
 done
-# NOTE: need `pip install altair`
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -33,5 +32,7 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
 prepend_path("PATH", apphome)
-setenv("SINGULARITY_BIND", "/home,/fast,/large")
+unsetenv("PERL5LIB")
+setenv("PERL_BADLANG", "0")
+setenv("SINGULARITY_BIND", "/data,/glusterfs,/glusterfs2,/glusterfs3,/grid2,/hpgdata,/hpgwork,/hpgwork2,/nfs/data05,/nfs/data06,/nfs/data07,/nfs/data08")
 __END__
