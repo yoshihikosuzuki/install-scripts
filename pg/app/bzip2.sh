@@ -4,20 +4,24 @@ set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/nfs/data05/yoshihiko_s/app
-APP=snakemake
-VER=8.13.0
+APP=bzip2
+VER=1.0.6
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
-bash Miniforge3-$(uname)-$(uname -m).sh -b -p $APPDIR/$VER
-cd $VER
-./bin/mamba install -c bioconda -c conda-forge -c defaults -y python=3.11
-./bin/mamba install -c bioconda -c conda-forge -c defaults -y $APP=$VER
-rm -rf pkgs
+# NOTE: downloaded from https://sourceforge.net/projects/bzip2/
+# mv ~/$APP\ $VER.tar.gz .
+tar xzvf $APP\ $VER.tar.gz
+mkdir $VER
+cd $APP-$VER
+make -f Makefile-libbz2_so
+make install PREFIX=$APPDIR/$VER
+cp libbz2.so.1.0* $APPDIR/$VER/lib/
+cd ..
+rm -r $APP-$VER
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -30,4 +34,8 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
 prepend_path("PATH", pathJoin(apphome, "bin"))
+prepend_path("LD_LIBRARY_PATH", pathJoin(apphome, "lib"))
+prepend_path("LDFLAGS", "-L" .. pathJoin(apphome, "lib"), " ")
+prepend_path("CPATH", pathJoin(apphome, "include"))
+prepend_path("CPPFLAGS", "-I" .. pathJoin(apphome, "include"), " ")
 __END__

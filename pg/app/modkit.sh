@@ -4,20 +4,16 @@ set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/nfs/data05/yoshihiko_s/app
-APP=snakemake
-VER=8.13.0
+APP=modkit
+VER=0.3.1
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
-bash Miniforge3-$(uname)-$(uname -m).sh -b -p $APPDIR/$VER
-cd $VER
-./bin/mamba install -c bioconda -c conda-forge -c defaults -y python=3.11
-./bin/mamba install -c bioconda -c conda-forge -c defaults -y $APP=$VER
-rm -rf pkgs
+mkdir $VER && cd $VER
+wget -O - https://github.com/nanoporetech/modkit/releases/download/v${VER}/modkit_v${VER}_centos7_x86_64.tar.gz | tar zxvf -
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -29,5 +25,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", pathJoin(apphome, "bin"))
+prepend_path("PATH", pathJoin(apphome, "dist"))
 __END__

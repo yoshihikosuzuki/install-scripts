@@ -1,11 +1,10 @@
 #!/bin/bash
 module purge
-set -eu
-set -x
+set -eux
 
 MODROOT=/nfs/data05/yoshihiko_s/app
-APP=repeatmasker
-VER=4.1.5
+APP=biser
+VER=1.4
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
@@ -15,17 +14,8 @@ curl -O https://repo.anaconda.com/miniconda/${CONDA_SH}
 sh ${CONDA_SH} -b -p $APPDIR/$VER
 rm ${CONDA_SH}
 cd $VER
-./bin/conda install -y -c bioconda -c free $APP=$VER
+PYTHONUSERBASE=$(pwd) ./bin/pip install --user --force-reinstall $APP==$VER
 rm -rf pkgs
-
-# NOTE: Do the configuration manually
-cd ${APPDIR}/${VER}/share/RepeatMasker
-cd Libraries
-wget https://www.dfam.org/releases/Dfam_3.8/families/Dfam.h5.gz
-source ../../bin/activate
-perl ./configure
-
-
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
@@ -36,6 +26,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("bzip2")
 prepend_path("PATH", pathJoin(apphome, "bin"))
 __END__
