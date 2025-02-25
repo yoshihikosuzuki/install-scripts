@@ -5,7 +5,7 @@ set -x
 
 MODROOT=/nfs/data05/yoshihiko_s/app
 APP=repeatmasker
-VER=4.1.5
+VER=4.1.7
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
@@ -21,11 +21,15 @@ rm -rf pkgs
 # NOTE: Do the configuration manually
 cd ${APPDIR}/${VER}/share/RepeatMasker
 cd Libraries
-wget https://www.dfam.org/releases/Dfam_3.8/families/Dfam.h5.gz
+wget https://www.dfam.org/releases/Dfam_3.7/families/Dfam.h5.gz
+gunzip Dfam.h5.gz
+# or,
+# wget https://www.dfam.org/releases/Dfam_3.7/families/Dfam_curatedonly.h5.gz
+# gunzip Dfam_curatedonly.h5.gz
+# ln -sf Dfam_curatedonly.h5 Dfam.h5
+cd ..
 source ../../bin/activate
 perl ./configure
-
-
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
