@@ -2,24 +2,24 @@
 module purge
 set -eux
 
-module use /nfs/data05/yoshihiko_s/app/.modulefiles
-# module load gcc/9.2.0
-
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/nfs/data05/yoshihiko_s/app
-APP=liftoff
-VER=1.6.3
+APP=hicpro
+VER=3.0.0
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
-bash Miniforge3-$(uname)-$(uname -m).sh -b -p $APPDIR/$VER
+mkdir -p $VER
 cd $VER
-./bin/mamba install -c bioconda -y liftoff=$VER
-rm -rf pkgs
+singularity pull $APP.sif docker://nservant/${APP}:${VER}
+for CMD in HiC-Pro; do
+    echo '#!/bin/sh' >$CMD
+    echo "singularity exec $APPDIR/$VER/$APP.sif /HiC-Pro_${VER}/bin/$CMD \$*" >>$CMD
+    chmod +x $CMD
+done
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -31,5 +31,8 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", pathJoin(apphome, "bin"))
+prepend_path("PATH", apphome)
+unsetenv("PERL5LIB")
+setenv("PERL_BADLANG", "0")
+setenv("APPTAINER_BIND", "/data,/grid2,/nfs/data02,/nfs/data03,/nfs/data04,/nfs/data05,/nfs/data06,/nfs/data07,/nfs/data08")
 __END__
