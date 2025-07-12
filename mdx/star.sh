@@ -4,20 +4,17 @@ set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/large/yoshihiko_s/app
-APP=last
-VER=1512
+APP=star
+VER=2.7.11b
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget -O - https://gitlab.com/mcfrith/last/-/archive/$VER/last-$VER.tar.gz | tar xzvf -
-cd $APP-$VER
-make
-mv bin $APPDIR/$VER
-cd ..
-rm -r $APP-$VER
+# wget -O - https://github.com/alexdobin/STAR/archive/refs/tags/${VER}.tar.gz | tar xzvf -
+mv STAR-$VER/bin/Linux_x86_64_static/ $VER
+rm -r STAR-$VER
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -29,6 +26,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("python/3")
 prepend_path("PATH", apphome)
 __END__

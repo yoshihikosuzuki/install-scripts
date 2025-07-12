@@ -4,20 +4,18 @@ set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/large/yoshihiko_s/app
-APP=last
-VER=1512
+APP=google-cloud-cli
+VER=517.0.0
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget -O - https://gitlab.com/mcfrith/last/-/archive/$VER/last-$VER.tar.gz | tar xzvf -
-cd $APP-$VER
-make
-mv bin $APPDIR/$VER
-cd ..
-rm -r $APP-$VER
+curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-linux-x86_64.tar.gz
+tar -xf google-cloud-cli-linux-x86_64.tar.gz
+rm google-cloud-cli-linux-x86_64.tar.gz
+mv google-cloud-sdk $VER
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -29,6 +27,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("python/3")
-prepend_path("PATH", apphome)
+prepend_path("PATH", pathJoin(apphome, "bin"))
 __END__

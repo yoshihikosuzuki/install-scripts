@@ -4,20 +4,23 @@ set -eux
 
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/large/yoshihiko_s/app
-APP=last
-VER=1512
+APP=screen
+VER=4.8.0
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget -O - https://gitlab.com/mcfrith/last/-/archive/$VER/last-$VER.tar.gz | tar xzvf -
+wget -O - https://ftp.gnu.org/gnu/screen/$APP-$VER.tar.gz | tar xzvf -
+mkdir $VER
 cd $APP-$VER
+./configure --prefix=$APPDIR/$VER
 make
-mv bin $APPDIR/$VER
+make install
 cd ..
-rm -r $APP-$VER
+rm -rf $APP-$VER
+
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
@@ -29,6 +32,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-depends_on("python/3")
-prepend_path("PATH", apphome)
+prepend_path("PATH", pathJoin(apphome, "bin"))
 __END__
