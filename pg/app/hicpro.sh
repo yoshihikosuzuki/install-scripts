@@ -14,10 +14,28 @@ mkdir -p $APPDIR && cd $APPDIR
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
 mkdir -p $VER
 cd $VER
+
 singularity pull $APP.sif docker://nservant/${APP}:${VER}
 for CMD in HiC-Pro; do
     echo '#!/bin/sh' >$CMD
     echo "singularity exec $APPDIR/$VER/$APP.sif /HiC-Pro_${VER}/bin/$CMD \$*" >>$CMD
+    chmod +x $CMD
+done
+
+CMD_PATH=/HiC-Pro_${VER}/bin/utils
+for CMD in $(singularity exec $APPDIR/$VER/$APP.sif ls ${CMD_PATH}); do
+    echo '#!/bin/sh' >$CMD
+    echo "singularity exec $APPDIR/$VER/$APP.sif ${CMD_PATH}/$CMD \$*" >>$CMD
+    chmod +x $CMD
+done
+
+CMD_PATH=/HiC-Pro_${VER}/scripts
+for CMD in $(singularity exec $APPDIR/$VER/$APP.sif ls ${CMD_PATH}); do
+    if [[ "$CMD" == "Makefile" || "$CMD" == "install" || "$CMD" == "src" ]]; then
+        continue
+    fi
+    echo '#!/bin/sh' >$CMD
+    echo "singularity exec $APPDIR/$VER/$APP.sif ${CMD_PATH}/$CMD \$*" >>$CMD
     chmod +x $CMD
 done
 
