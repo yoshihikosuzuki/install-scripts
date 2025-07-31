@@ -3,8 +3,8 @@
 module load singularity
 
 APP=deepvariant
-VER=1.6.0
-MODROOT=/apps/unit/BioinfoUgrp/Other
+VER=1.9.0
+MODROOT=/bucket/BioinfoUgrp/Other
 
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
@@ -21,7 +21,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 APP=minimap2
-VER=2.20
-MODROOT=/apps/unit/BioinfoUgrp/Other
+VER=2.30
+MODROOT=/bucket/BioinfoUgrp/Other
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
@@ -16,7 +16,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())

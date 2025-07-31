@@ -1,14 +1,16 @@
 #!/bin/bash
 
-APP=mosdepth
-VER=0.3.11
+APP=yahs
+VER=1.2.2
 MODROOT=/bucket/BioinfoUgrp/Other
 
-APPDIR=$MODROOT/$APP/$VER
+APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
 
-wget https://github.com/brentp/mosdepth/releases/download/v$VER/mosdepth && chmod +x mosdepth
+wget -O - https://github.com/c-zhou/yahs/archive/refs/tags/v${VER}.tar.gz | tar xzvf -
+mv $APP-$VER $VER
+cd $VER && make
 
 cd $MODROOT/modulefiles/
 mkdir -p $APP
@@ -22,10 +24,10 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 -- Package information
 whatis("Name: "..appname)
 whatis("Version: "..appversion)
-whatis("URL: ".."https://github.com/brentp/mosdepth")
+whatis("URL: ".."https://github.com/c-zhou/yahs")
 whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."assembly")
-whatis("Description: ".."fast BAM/CRAM depth calculation for WGS, exome, or targeted sequencing.")
+whatis("Keywords: ".."scaffolding, Hi-C")
+whatis("Description: ".."Yet another Hi-C scaffolding tool.")
 
 -- Package settings
 prepend_path("PATH", apphome)
