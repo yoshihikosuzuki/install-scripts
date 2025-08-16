@@ -1,21 +1,25 @@
 #!/bin/bash
+module purge
+set -eux
 
 APP=FASTK
-VER=2021.09.29
-MODROOT=/apps/unit/BioinfoUgrp/Other
+VER=2025.06.07
+MODROOT=/bucket/BioinfoUgrp/Other
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
 
 git clone https://github.com/thegenemyers/FASTK
-mv FASTK $VER && cd $VER && make
+mv FASTK $VER
+cd $VER
+make
 
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
