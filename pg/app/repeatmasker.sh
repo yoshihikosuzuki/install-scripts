@@ -5,24 +5,22 @@ set -x
 
 MODROOT=/nfs/data05/yoshihiko_s/app
 APP=repeatmasker
-VER=4.1.7
+VER=4.1.9
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-CONDA_SH=Miniconda3-py37_4.9.2-Linux-x86_64.sh
-curl -O https://repo.anaconda.com/miniconda/${CONDA_SH}
-sh ${CONDA_SH} -b -p $APPDIR/$VER
-rm ${CONDA_SH}
+# wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+# bash Miniforge3-$(uname)-$(uname -m).sh -b -p $APPDIR/$VER
 cd $VER
-./bin/conda install -y -c bioconda -c free $APP=$VER
-rm -rf pkgs
+# ./bin/mamba install -y -c bioconda -c free $APP=$VER
+# rm -rf pkgs
 
 # NOTE: Do the configuration manually
 cd ${APPDIR}/${VER}/share/RepeatMasker
 cd Libraries
-wget https://www.dfam.org/releases/Dfam_3.7/families/Dfam.h5.gz
-gunzip Dfam.h5.gz
+# wget https://www.dfam.org/releases/Dfam_3.7/families/Dfam.h5.gz
+# gunzip Dfam.h5.gz
 # or,
 # wget https://www.dfam.org/releases/Dfam_3.7/families/Dfam_curatedonly.h5.gz
 # gunzip Dfam_curatedonly.h5.gz
