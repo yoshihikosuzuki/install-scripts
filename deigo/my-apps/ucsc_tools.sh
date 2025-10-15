@@ -2,21 +2,15 @@
 module purge
 set -eux
 
-# DEFINE WHERE TO INSTALL, APP NAME AND VERSION
-MODROOT=/nfs/data05/yoshihiko_s/app
+MODROOT=/hpcshare/appsunit/MyersU/yoshihiko-suzuki
 APP=ucsc_tools
 VER=2024.09.13
 
-# MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-# DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-# NOTE: https://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64
-# NOTE: copied from mdx
-# rsync -aP mdx://hgdownload.soe.ucsc.edu/genome/admin/exe/linux.x86_64/ ./$VER
+# copied from pg
 
-# WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
 -- Default settings
@@ -26,5 +20,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", apphome)
+prepend_path("PATH", pathJoin(apphome, "bin"))
 __END__
