@@ -3,52 +3,10 @@
 ## How to load a module
 
 ```bash
-. $LMOD_INIT            # Make Lmod available; Specific to HPC (see below)
-module use $MODROOT     # Make the modules under $MODROOT visible to Lmod
-module load $APP/$VER   # Load a module
+. /path/to/lmod/init/bash   # Make Lmod available (the path depends on environment)
+module use $MODROOT         # Make the modules under the $MODROOT directory visible to Lmod
+module load $APP/$VER       # Load a module
 ```
-
-## List of HPCs and their `$LMOD_INIT`
-
-| Name | Description | `$LMOD_INIT` |
-|:-|:-|:-|
-| Deigo | OIST's HPC |  `/apps/free/lmod/lmod/init/bash` |
-| hx | Morishita lab's HPC for non-human researches | `/bio/lmod/lmod/init/bash` |
-| pg | Morishita lab's HPC for human researches | `/bio/lmod/lmod/init/bash` |
-| Oakbridge-CX (OBCX) | UT's HPC | ? |
-
-## List of `$MODROOT`s
-
-### Deigo
-
-| Name | `$MODROOT` |
-|:-|:-|
-| Pre-installed<br>(loaded on login) | `/apps/.modulefiles81` |
-| Additional pre-installed | `/apps/.modulefiles72` |
-| Bioinfo Ugrp | `/apps/.bioinfo-ugrp-modulefiles81` |
-| DebianMed<br>(needs Bioinfo Ugrp) | `/apps/unit/BioinfoUgrp/DebianMed/10.7/modulefiles` |
-| MyersU | `/hpcshare/appsunit/MyersU/.modulefiles` |
-| Yoshi's personal | `/hpcshare/appsunit/MyersU/yoshihiko-suzuki/.modulefiles` |
-
-### hx
-
-| Name | `$MODROOT` |
-|:-|:-|
-| Imported from `/bio/package` | `/bio/package/.modulefiles` |
-| Yoshi's personal | `/work/yoshihiko_s/app/.modulefiles` |
-
-### pg
-
-| Name | `$MODROOT` |
-|:-|:-|
-| Imported from `/bio/package` | `/bio/package/.modulefiles` |
-| Yoshi's personal | `/nfs/data05/yoshihiko_s/app/.modulefiles` |
-
-### Oakbridge-CX
-
-| Name | `$MODROOT` |
-|:-|:-|
-| Yoshi's personal | `/work/00/gg57/g57015/app/.modulefiles` |
 
 ## Directory structure of modules and modulefiles
 
@@ -77,7 +35,7 @@ $MODROOT/
 
 ## How to install a module
 
-In general, every installation of a module overall takes the following form (`template/general.sh` in this repository):
+In general, every installation of a module overall takes the following form (`template.sh`):
 
 ```bash
 #!/bin/bash
@@ -115,22 +73,3 @@ prepend_path("PATH", apphome)
 ...
 __END__
 ```
-
-Basically what you need to do for a specific software's installation are:
-
-0. Revert to the *default* shell environment (i.e. no modules, no functions/aliases, no user-appended PATH/etc.) as much as possible.
-1. Set `$MODROOT`, `$APP`, and `$VER` variables.
-2. Modify the "DOWNLOAD AND INSTALL" part and "LOAD DEPENDENCIES" (possibly while installing the software).
-3. Modify the "Package settings" part in the modulefile.
-4. Run the script.
-
-In the `template/` directory of this repository, there are template installation scripts for several installation types:
-
-| Installation Type | File name |
-|:-|:-|
-| Make | `make.sh` |
-| Autotools | `autotools.sh` |
-| Python/pip | `python.sh` |
-| Anaconda/Bioconda | `conda.sh` |
-| R | `R.sh` |
-| Singularity/Docker | `singularity.sh` |
