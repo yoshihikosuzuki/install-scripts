@@ -2,12 +2,12 @@
 module purge
 set -eux
 
-module use /bio/package/.modulefiles
-module load gcc/9.2.0
+# module use /bio/package/.modulefiles
+# module load gcc/9.2.0
 
 MODROOT=/nfs/data05/yoshihiko_s/app
 APP=hifiasm
-VER=0.19.8
+VER=0.25.0
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
