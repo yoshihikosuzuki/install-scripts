@@ -4,7 +4,7 @@ set -eux
 
 MODROOT=/nfs/data05/yoshihiko_s/app
 APP=deepvariant
-VER=1.5.0
+VER=1.9.0
 
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
@@ -30,5 +30,5 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 prepend_path("PATH", apphome)
 unsetenv("PERL5LIB")
 setenv("PERL_BADLANG", "0")
-setenv("SINGULARITY_BIND", "/data,/glusterfs,/glusterfs2,/glusterfs3,/grid2,/hpgdata,/hpgwork,/hpgwork2,/nfs/data05,/nfs/data06,/nfs/data07,/nfs/data08")
+setenv("SINGULARITY_BIND", "/grid2,/nfs/data04,/nfs/data05,/nfs/data06,/nfs/data07,/nfs/data08,/nfs/data09")
 __END__

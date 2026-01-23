@@ -6,7 +6,7 @@ module use /bio/package/.modulefiles
 module load gcc/9.2.0
 
 APP=dazz_db
-VER=2022.04.26
+VER=2025.02.17
 MODROOT=/nfs/data05/yoshihiko_s/app
 
 APPDIR=$MODROOT/$APP

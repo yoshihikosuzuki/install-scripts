@@ -5,7 +5,7 @@ set -eux
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/large/yoshihiko_s/app
 APP=vg
-VER=1.57.0
+VER=1.67.0
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
@@ -14,7 +14,7 @@ mkdir -p $APPDIR && cd $APPDIR
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
 mkdir $VER
 cd $VER
-wget https://github.com/vgteam/vg/releases/download/v1.57.0/vg
+wget https://github.com/vgteam/vg/releases/download/v${VER}/vg
 chmod +x vg
 
 # WRITE A MODULEFILE
