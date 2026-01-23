@@ -2,21 +2,21 @@
 module purge
 set -eux
 
-# DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/large/yoshihiko_s/app
-APP=vcfbub
-VER=0.1.2
+APP=truvari
+VER=5.3.0
 
-# MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-# DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-# wget -O - https://github.com/pangenome/vcfbub/archive/refs/tags/v${VER}.tar.gz | tar xzvf -
-# mv vcfbub-${VER} $VER
-# cargo build --release
+CONDA_SH=Miniconda3-py39_23.5.2-0-Linux-x86_64.sh
+curl -O https://repo.anaconda.com/miniconda/${CONDA_SH}
+sh ${CONDA_SH} -b -p $APPDIR/$VER
+rm ${CONDA_SH}
+cd $VER
+PYTHONUSERBASE=$(pwd) ./bin/pip install --user --force-reinstall truvari==5.3.0
+rm -rf pkgs
 
-# WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua
 -- Default settings
@@ -26,5 +26,5 @@ local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
 
 -- Package settings
-prepend_path("PATH", pathJoin(apphome, "target/release"))
+prepend_path("PATH", pathJoin(apphome, "bin"))
 __END__
