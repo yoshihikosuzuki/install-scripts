@@ -4,7 +4,7 @@ set -eux
 
 MODROOT=/large/yoshihiko_s/app
 APP=vcflib
-VER=1.0.9
+VER=1.0.14
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
