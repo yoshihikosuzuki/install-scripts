@@ -15,7 +15,7 @@ mkdir -p model
 gsutil cp -r gs://brain-genomics-public/research/deepconsensus/models/v1.2/model_checkpoint/* model/
 for CMD in deepconsensus; do
     echo '#!/bin/sh' >$CMD
-    echo "singularity exec $APPDIR/$APP.sif $CMD --checkpoint=$APPDIR/model/checkpoint \$*" >>$CMD
+    echo "singularity exec --nv $APPDIR/$APP.sif $CMD --checkpoint=$APPDIR/model/checkpoint \$*" >>$CMD
     chmod +x $CMD
 done
 
@@ -31,5 +31,5 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 prepend_path("PATH", apphome)
 unsetenv("PERL5LIB")
 setenv("PERL_BADLANG", "0")
-setenv("APPTAINER_BIND", "/data,/grid2,/nfs/data02,/nfs/data03,/nfs/data04,/nfs/data05,/nfs/data06,/nfs/data07,/nfs/data08,/nfs/data09")
+setenv("APPTAINER_BIND", "/data,/grid2,/nfs/data03,/nfs/data04,/nfs/data05,/nfs/data06,/nfs/data07,/nfs/data08,/nfs/data09")
 __END__
