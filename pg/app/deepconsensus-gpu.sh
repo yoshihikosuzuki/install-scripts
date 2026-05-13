@@ -31,5 +31,6 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 prepend_path("PATH", apphome)
 unsetenv("PERL5LIB")
 setenv("PERL_BADLANG", "0")
-setenv("APPTAINER_BIND", "/data,/grid2,/nfs/data03,/nfs/data04,/nfs/data05,/nfs/data06,/nfs/data07,/nfs/data08,/nfs/data09")
+setenv("APPTAINER_BIND", "/grid2,/nfs/data03,/nfs/data04,/nfs/data05,/nfs/data06,/nfs/data07,/nfs/data08,/nfs/data09")
+setenv("SINGULARITY_BINDPATH", "/grid2,/nfs/data03,/nfs/data04,/nfs/data05,/nfs/data06,/nfs/data07,/nfs/data08,/nfs/data09")
 __END__
