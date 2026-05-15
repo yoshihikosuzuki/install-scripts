@@ -1,10 +1,12 @@
 #!/bin/bash
 module purge
-set -eux
+set -u
+module load python/3.10.12
+set -x
 
 MODROOT=/large/yoshihiko_s/app
 APP=make_telomere_bed
-VER=2022.05.31
+VER=2024.01.24
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
