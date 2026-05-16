@@ -2,26 +2,20 @@
 module purge
 set -eux
 
-module use /large/yoshihiko_s/app/.modulefiles
-module load curl
+# module use /large/yoshihiko_s/app/.modulefiles
+# module load curl
 
 MODROOT=/large/yoshihiko_s/app
-APP=fastk
-VER=2025.09.13
+APP=daligner
+VER=2024.01.19
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
 
-git clone https://github.com/thegenemyers/FASTK
-mv FASTK $VER
+git clone https://github.com/thegenemyers/DALIGNER
+mv DALIGNER $VER
 cd $VER
-# git checkout ba0d260
-make clean
-cat <<__END__ >HTSLIB/htslib_static.mk
-HTSLIB_static_LDFLAGS = -L/large/yoshihiko_s/app/curl/8.5.0/lib -Wl,-rpath=/large/yoshihiko_s/app/curl/8.5.0/lib
-HTSLIB_static_LIBS = -lz -lm -lbz2 -llzma -lcurl
-__END__
 make
 
 cd $MODROOT/.modulefiles
