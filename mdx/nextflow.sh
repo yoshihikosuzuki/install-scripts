@@ -4,7 +4,7 @@ set -eux
 # DEFINE WHERE TO INSTALL, APP NAME AND VERSION
 MODROOT=/large/yoshihiko_s/app
 APP=nextflow
-VER=26.04.1
+VER=25.10.5
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
@@ -12,8 +12,8 @@ mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
 mkdir -p $VER && cd $VER
+export NXF_VER=$VER
 curl -fsSL https://get.nextflow.io | bash
-# wget -qO- https://github.com/nextflow-io/nextflow/releases/download/v$VER/nextflow-$VER-all | bash
 
 # WRITE A MODULEFILE
 cd $MODROOT/.modulefiles && mkdir -p $APP

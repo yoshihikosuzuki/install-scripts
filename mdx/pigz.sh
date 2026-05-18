@@ -4,7 +4,7 @@ set -eux
 
 MODROOT=/large/yoshihiko_s/app
 APP=pigz
-VER=2.8
+VER=2.7
 
 # MAKE THE MODULE DIRECTORY
 APPDIR=$MODROOT/$APP
