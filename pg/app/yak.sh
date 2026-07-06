@@ -2,28 +2,16 @@
 module purge
 set -eux
 
-# module use /bio/package/.modulefiles
-# module load gcc/9.2.0
-
 MODROOT=/nfs/data05/yoshihiko_s/app
-APP=hifiasm
-VER=0.25.0.hybrid_v1
+APP=yak
+VER=0.1
 
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
-# wget -O - https://github.com/chhylp123/hifiasm/archive/refs/tags/$VER.tar.gz | tar xzvf -
-# mv $APP-$VER $VER
-# cd $VER
-
-mkdir $VER
-git clone https://github.com/chhylp123/hifiasm.git
-cd hifiasm
-git checkout hybrid_v1
+wget -O - https://github.com/lh3/$APP/archive/refs/tags/v$VER.tar.gz | tar xzvf -
+mv $APP-$VER $VER && cd $VER
 make
-cp hifiasm $APPDIR/$VER
-cd ..
-rm -rf hifiasm
 
 cd $MODROOT/.modulefiles && mkdir -p $APP
 cat <<__END__ >$APP/$VER.lua

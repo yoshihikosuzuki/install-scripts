@@ -6,7 +6,7 @@ module load gcc/9.2.0
 set -x
 
 APP=daligner
-VER=2021.03.30
+VER=2024.01.19
 MODROOT=/nfs/data05/yoshihiko_s/app
 
 APPDIR=$MODROOT/$APP
