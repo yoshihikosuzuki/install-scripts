@@ -10,13 +10,14 @@ APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR && cd $APPDIR
 
 # DOWNLOAD AND INSTALL TO `$APPDIR/$VER`
-wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
-bash Miniforge3-$(uname)-$(uname -m).sh -b -p $APPDIR/$VER
 # CONDA_SH=Miniconda3-py39_24.1.2-0-Linux-x86_64.sh
 # curl -O https://repo.anaconda.com/miniconda/${CONDA_SH}
 # bash ${CONDA_SH} -b -p $APPDIR/$VER
 # rm ${CONDA_SH}
+wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh -b -p $APPDIR/$VER
 cd $VER
+./bin/mamba install -y python=3.10
 ./bin/mamba install -c conda-forge -c bioconda -c defaults -y $APP=$VER
 rm -rf pkgs
 
